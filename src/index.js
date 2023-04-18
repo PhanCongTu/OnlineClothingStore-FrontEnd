@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
-import Home from './Components/Home/Home';
-import Login from './Components/Login/Login';
-import Register from './Components/Register/Register';
+import Home from './Pages/Home/Home';
+import Login from './Pages/Login/Login';
+import Register from './Pages/Register/Register';
 
 import reportWebVitals from './reportWebVitals';
 
@@ -12,12 +12,13 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Router>
-      <h1>Hello</h1>
-      <Routes>
-        <Route path='/' exact component={Home} />
-        <Route path='/login' component={Login} />
-        <Route path='/contact' component={Register} />
-      </Routes>
+      <div className='App'>
+        <Routes>
+          <Route path='/' exact element={<Home />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+        </Routes>
+      </div>
     </Router>
   </React.StrictMode>
 );

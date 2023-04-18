@@ -1,16 +1,26 @@
 import React from 'react'
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
-import '../css/bootstrap.min.css'
-import '../css/magnific-popup.css'
-import '../css/nice-select.css'
-import '../css/slicknav.min.css'
-import '../css/style.css'
-import '../css/style.css.map'
-import '../css/slicknav.min.css'
+import '../../css/bootstrap.min.css'
+import '../../css/magnific-popup.css'
+import '../../css/nice-select.css'
+import '../../css/slicknav.min.css'
+import '../../css/style.css'
+import '../../css/style.css.map'
+import '../../css/slicknav.min.css'
 import './Header.css'
 
 function Header() {
+      const navigate = useNavigate();
+      let LoginedUser = JSON.parse(sessionStorage.getItem('LoginedUser'));
+      if (!LoginedUser) {
+            LoginedUser = JSON.parse(localStorage.getItem('LoginedUser'));
+      }
+      const handleLogout = () => {
+            sessionStorage.removeItem('LoginedUser')
+            localStorage.removeItem('LoginedUser')
+            navigate('/');
+      }
       return (
             <header className="header">
                   <div className="header__top">
@@ -21,23 +31,25 @@ function Header() {
                                                 <p>Chào mừng đến với Shop của chúng tôi</p>
                                           </div>
                                     </div>
-                                    <div className="col-lg-6 col-md-7">
+                                    <div className="col-lg-5 col-md-7">
                                           <div className="header__top__right">
-                                                <div className="header__top__links">
-                                                      <NavLink exact activeStyle={{
-                                                            backgroundColor: 'white',
-                                                            color: 'red'
-                                                      }} to="/login" className="my-link">Đăng nhập</NavLink>
-                                                </div>
-                                                <div className="header__top__hover">
-                                                      <span>Phan Công Tú</span>
-                                                      <ul>
-                                                            <li className='user-option'>Chỉnh sửa tài khoản</li>
-                                                            <li className='user-option'>Giỏ hàng</li>
-                                                            <li className='user-option'>Lịch sử mua hàng</li>
-                                                            <li className='user-option'><strong>Đăng suất</strong></li>
-                                                      </ul>
-                                                </div>
+                                                {LoginedUser ?
+                                                      <div className="header__top__hover pr-5">
+                                                            <span className='username'>{LoginedUser.fullName}</span>
+                                                            <ul>
+                                                                  <li className='user-option'>Chỉnh sửa tài khoản</li>
+                                                                  <li className='user-option'>Giỏ hàng</li>
+                                                                  <li className='user-option'>Lịch sử mua hàng</li>
+                                                                  <li className='user-option' onClick={handleLogout}><strong>Đăng suất</strong></li>
+                                                            </ul>
+                                                      </div>
+                                                      :
+                                                      <div className="header__top__links">
+                                                            <NavLink style={{ textDecoration: 'none' }} to="/login" className="my-link">Đăng nhập</NavLink>
+                                                      </div>
+                                                }
+
+
                                           </div>
                                     </div>
                               </div>
@@ -46,11 +58,11 @@ function Header() {
                   <div className="container">
                         <nav className="header__menu mobile-menu">
                               <ul>
-                                    <li className="active"><a href="./index.html">Home</a></li>
-                                    <li><a href="./shop.html">Shop</a></li>
-                                    <li><a href="./shop.html">Pages</a></li>
-                                    <li><a href="./blog.html">Blog</a></li>
-                                    <li><a href="./contact.html">Contacts</a></li>
+                                    <li><NavLink style={{ textDecoration: 'none' }} to="/">Home</NavLink></li>
+                                    <li><NavLink style={{ textDecoration: 'none' }} to="/">Home</NavLink></li>
+                                    <li><NavLink style={{ textDecoration: 'none' }} to="/">Home</NavLink></li>
+                                    <li><NavLink style={{ textDecoration: 'none' }} to="/">Home</NavLink></li>
+                                    <li><NavLink style={{ textDecoration: 'none' }} to="/">Home</NavLink></li>
                               </ul>
                         </nav>
                   </div>
