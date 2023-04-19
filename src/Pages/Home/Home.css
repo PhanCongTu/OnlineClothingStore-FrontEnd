@@ -1,0 +1,25 @@
+.product_detail {
+  background-color: #080808;
+  border-radius: 10px;
+}
+.see-detail {
+  text-decoration: none;
+}
+.see-detail:hover {
+  color: red;
+  font-size: larger;
+  margin-bottom: 10px;
+}
+.product_detail .product_sold {
+  padding-top: 5px;
+  display: inline-flex;
+  padding-right: 20px;
+  float: right;
+  color: #ffffff;
+}
+.product_detail .product_price {
+  padding-top: 5px;
+  display: inline-flex;
+  padding-left: 20px;
+  color: #ffffff;
+}

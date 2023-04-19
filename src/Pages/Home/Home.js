@@ -1,5 +1,4 @@
-import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useEffect, useState } from 'react'
 import '../../css/bootstrap.min.css'
 import '../../css/magnific-popup.css'
 import '../../css/nice-select.css'
@@ -7,13 +6,39 @@ import '../../css/slicknav.min.css'
 import '../../css/style.css'
 import '../../css/style.css.map'
 import '../../css/slicknav.min.css'
-
+import './Home.css'
 import Header from '../../Components/Header/Header'
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
+import { NavLink } from 'react-router-dom'
 
 // m dang o home.js  ./ là lấy thư mục hiện tại,   ../ lùi lại 1 thư mục  -> page ../../ -> src trong src có css pages cùng cấp thì trỏ để
 // đến css bằng ../../css hoặc m chơi đường dẫn  tuyệt đối
 function Home() {
+      const [option, setOption] = useState('best-selling');
+      const handleOption = (choose) => {
+            setOption(choose)
+      }
+      const [data, setData] = useState([])
+      useEffect(() => {
+            let data = '';
+            let config = {
+                  method: 'get',
+                  maxBodyLength: Infinity,
+                  url: `http://localhost:8282/api/product/${option}`,
+                  headers: {},
+                  data: data
+            };
+
+            axios.request(config)
+                  .then((response) => {
+                        console.log(response.data);
+                        setData(response.data);
+                  })
+                  .catch((error) => {
+                        alert(error.message)
+                        // console.log(error);
+                  });
+      }, [option]);
       return (
             <div>
                   <Header />
@@ -22,36 +47,50 @@ function Home() {
                               <div className="row">
                                     <div className="col-lg-12">
                                           <ul className="filter__controls">
-                                                <li className="active" data-filter="*">Best Sellers</li>
-                                                <li data-filter=".new-arrivals">New Arrivals</li>
+                                                <li className={option === 'best-selling' ? 'active' : ''} name='best-selling' onClick={() => handleOption('best-selling')} >Best Sellers</li>
+                                                <li className={option === 'new' ? 'active' : ''} name='new' onClick={() => handleOption('new')} >New Arrivals</li>
                                           </ul>
                                     </div>
                               </div>
                               <div className="row product__filter">
-                                    <div className="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
-                                          <div className="product__item">
-                                                <div className="product__item__pic set-bg" style={{
-                                                      backgroundImage: `url("https://vnw-img-cdn.popsww.com/api/v2/containers/file2/cms_topic/doraemons9_05_seriesdetailimagemobile-80424f74d030-1609395371290-iZgELVcX.png?v=0")`,
-                                                }} >
-                                                      <ul className="product__hover">
-                                                            <li><a href="/"><FontAwesomeIcon icon={faHeart} style={{ color: "#ff0000", }} /></a></li>
-                                                      </ul>
-                                                </div>
-                                                <div className="product__item__text">
-                                                      <h6>Piqué Biker Jacket</h6>
-                                                      <a href="/" className="add-cart">Xem chi tiết</a>
-                                                      <div className="rating">
-                                                            <i className="fa fa-star"></i>
-                                                      </div>
-                                                      <h5>$67.24</h5>
+                                    {data.length !== 0 ?
+                                          data.map((item, key) => {
+                                                return (
+                                                      <div key={key} className="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix">
+                                                            <div className="product__item">
+                                                                  <div className="product__item__pic set-bg" style={{
+                                                                        backgroundSize: 'contain',
+                                                                        backgroundImage: `url(${item && item.productImages[0] && item.productImages[0].image ? item.productImages[0].image : ''})`,
+                                                                  }} >
+                                                                        {/* <ul className="product__hover">
+                                                                              <li><FontAwesomeIcon icon={faHeart} style={{ color: "#ff0000", }} /></li>
+                                                                        </ul> */}
+                                                                  </div>
+                                                                  <div className="product__item__text">
+                                                                        <h5 style={{ padding: '20px' }}>{item.productName}</h5>
+                                                                        <NavLink className='see-detail' to="/" >Xem chi tiết</NavLink>
+                                                                        {/* <div className="rating">
+                                                                              <h6>5   <FontAwesomeIcon icon={faStar} style={{ color: "#f5e000", }} /></h6>
+                                                                        </div> */}
+                                                                        <div className='product_detail' >
+                                                                              <h5 className='product_price' >{item.price} VND </h5>
+                                                                              <h5 className='product_sold' >{item.sold} đã bán</h5>
+                                                                        </div>
 
-                                                </div>
-                                          </div>
-                                    </div>
+                                                                  </div>
+                                                            </div>
+                                                      </div>
+                                                )
+                                          })
+                                          :
+                                          <h2>Không tìm thấy sản phẩm!</h2>
+                                    }
+
+
                               </div>
                         </div>
-                  </section>
-            </div>
+                  </section >
+            </div >
       )
 }
 

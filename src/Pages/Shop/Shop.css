@@ -1,0 +1,41 @@
+.shop__sidebar {
+  border-right: 3px solid rgb(0, 0, 0);
+}
+.select-sort {
+  padding-left: 5px;
+  border-radius: 20px;
+}
+.select-sort:hover {
+  cursor: pointer;
+}
+.cat-item {
+  font-size: 18px;
+}
+.cat-item:hover {
+  color: rgb(253, 253, 253);
+  background-color: black;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.page-number {
+  width: 30px;
+  font-size: 20px;
+  font-weight: 700;
+  border: 3px solid rgb(0, 0, 0);
+  border-radius: 50%;
+  margin: 4px;
+}
+.page-number:hover {
+  border: 3px solid rgb(237, 4, 4);
+  cursor: pointer;
+}
+.page-number.active {
+  border: 3px solid rgb(0, 0, 0);
+  color: aliceblue;
+  background-color: black;
+}
+.product__pagination {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}

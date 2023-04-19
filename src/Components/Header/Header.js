@@ -58,11 +58,20 @@ function Header() {
                   <div className="container">
                         <nav className="header__menu mobile-menu">
                               <ul>
-                                    <li><NavLink style={{ textDecoration: 'none' }} to="/">Home</NavLink></li>
-                                    <li><NavLink style={{ textDecoration: 'none' }} to="/">Home</NavLink></li>
-                                    <li><NavLink style={{ textDecoration: 'none' }} to="/">Home</NavLink></li>
-                                    <li><NavLink style={{ textDecoration: 'none' }} to="/">Home</NavLink></li>
-                                    <li><NavLink style={{ textDecoration: 'none' }} to="/">Home</NavLink></li>
+                                    <li>
+                                          <NavLink style={({ isActive }) => ({
+                                                textDecoration: 'none',
+                                                color: isActive ? 'red' : 'black',
+                                                borderBottom: isActive ? '3px solid red' : ''
+                                          })} to="/">Home</NavLink>
+                                    </li>
+                                    <li>
+                                          <NavLink style={({ isActive }) => ({
+                                                textDecoration: 'none',
+                                                color: isActive ? 'red' : 'black',
+                                                borderBottom: isActive ? '3px solid red' : ''
+                                          })} to="/shop">Shop</NavLink>
+                                    </li>
                               </ul>
                         </nav>
                   </div>
