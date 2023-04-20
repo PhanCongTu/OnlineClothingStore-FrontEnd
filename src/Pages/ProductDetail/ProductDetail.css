@@ -1,0 +1,29 @@
+.quantity_number {
+  display: inline-flex;
+  align-items: center;
+  justify-self: center;
+  padding: 0px 30px 30px 30px;
+}
+.qn_item {
+  padding: 15px;
+}
+.arrow:hover {
+  cursor: pointer;
+  background-color: rgb(211, 211, 211);
+  border-radius: 50px;
+}
+.add_cart:hover {
+  border: #000 4px solid;
+  background-color: aliceblue;
+  color: #000;
+  cursor: pointer;
+}
+.nav-item:hover {
+  cursor: pointer;
+}
+.success {
+  padding-bottom: 20px;
+  font-size: larger;
+  font-weight: 700;
+  color: rgb(27, 199, 12);
+}

@@ -1511,8 +1511,6 @@ ol {
 .product__details__pic {
   text-align: center;
   background: #f3f2ee;
-  padding: 40px 0 60px;
-  margin-bottom: 100px;
 }
 
 .product__details__pic .nav-tabs {
@@ -1534,8 +1532,8 @@ ol {
 }
 
 .product__details__pic .nav-tabs .nav-item .nav-link .product__thumb__pic {
-  height: 120px;
-  width: 95px;
+  height: 170px;
+  width: 300px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1767,10 +1765,12 @@ ol {
 }
 
 .product__details__cart__option .quantity .pro-qty {
-  width: 100px;
   height: 40px;
   border: 1px solid #e5e5e5;
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .product__details__cart__option .quantity .pro-qty input {

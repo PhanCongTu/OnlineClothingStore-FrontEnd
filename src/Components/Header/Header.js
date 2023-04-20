@@ -72,13 +72,13 @@ function Header() {
                                                 borderBottom: isActive ? '3px solid red' : ''
                                           })} to="/shop">Shop</NavLink>
                                     </li>
-                                    <li>
+                                    {/* <li>
                                           <NavLink style={({ isActive }) => ({
                                                 textDecoration: 'none',
                                                 color: isActive ? 'red' : 'black',
                                                 borderBottom: isActive ? '3px solid red' : ''
                                           })} to={{ pathname: "/product" }} state={{ productId: 1 }} >ProductDetail</NavLink>
-                                    </li>
+                                    </li> */}
                               </ul>
                         </nav>
                   </div>
