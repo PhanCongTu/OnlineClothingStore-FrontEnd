@@ -39,3 +39,15 @@
   display: flex;
   justify-content: center;
 }
+.cat-item.active {
+  color: red;
+}
+.navigate-page {
+  font-weight: 700;
+  padding: 10px;
+  margin-bottom: 0;
+}
+.navigate-page:hover {
+  color: red;
+  cursor: pointer;
+}

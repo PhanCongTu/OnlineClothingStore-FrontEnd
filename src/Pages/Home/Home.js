@@ -62,16 +62,12 @@ function Home() {
                                                                         backgroundSize: 'contain',
                                                                         backgroundImage: `url(${item && item.productImages[0] && item.productImages[0].image ? item.productImages[0].image : ''})`,
                                                                   }} >
-                                                                        {/* <ul className="product__hover">
-                                                                              <li><FontAwesomeIcon icon={faHeart} style={{ color: "#ff0000", }} /></li>
-                                                                        </ul> */}
+
                                                                   </div>
                                                                   <div className="product__item__text">
                                                                         <h5 style={{ padding: '20px' }}>{item.productName}</h5>
-                                                                        <NavLink className='see-detail' to="/" >Xem chi tiết</NavLink>
-                                                                        {/* <div className="rating">
-                                                                              <h6>5   <FontAwesomeIcon icon={faStar} style={{ color: "#f5e000", }} /></h6>
-                                                                        </div> */}
+                                                                        <NavLink className='see-detail' to="/product" state={{ productId: item.id }} >Xem chi tiết</NavLink>
+
                                                                         <div className='product_detail' >
                                                                               <h5 className='product_price' >{item.price} VND </h5>
                                                                               <h5 className='product_sold' >{item.sold} đã bán</h5>
