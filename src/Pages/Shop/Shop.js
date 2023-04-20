@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../css/bootstrap.min.css'
 import '../../css/magnific-popup.css'
 import '../../css/nice-select.css'
@@ -10,17 +10,34 @@ import './Shop.css'
 import Header from '../../Components/Header/Header'
 import { NavLink } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircle, faListUl, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faArrowRight, faCircle, faListUl, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
 function Shop() {
       const [data, setData] = useState([])
       const [categoryId, setCategoryId] = useState(0);
-      const [listCart, setListCart] = useState([]);
-
-      const handleCategory = () => {
+      const [listCat, setListCat] = useState([]);
+      const [searchText, setSearchText] = useState('')
+      const [pageNumber, setPageNumber] = useState(0)
+      const [totalPages, setTotalPages] = useState(0)
+      const [totalElements, setTotalElements] = useState(0)
+      const [sortType, setSortType] = useState(0)
+      const handleSortType = (num) => {
+            console.log(num)
+            setSortType(num)
 
       }
-
+      const handleCategory = (id) => {
+            setCategoryId(id)
+            console.log(id)
+      }
+      const handleSearch = (text) => {
+            console.log(text)
+            setSearchText(text)
+      }
+      const handlePage = (number) => {
+            console.log(number)
+            setPageNumber(number)
+      }
       useEffect(() => {
             let config = {
                   method: 'get',
@@ -31,14 +48,35 @@ function Shop() {
 
             axios.request(config)
                   .then((response) => {
-                        console.log(response.data.content);
-                        setListCart(response.data.content);
+                        // console.log(response.data.content);
+                        setListCat(response.data.content);
                   })
                   .catch((error) => {
-                        console.log(error);
+                        // 
+                        alert(error.message);
                   });
-      }, [categoryId])
+      }, [])
+      useEffect(() => {
+            let config = {
+                  method: 'get',
+                  maxBodyLength: Infinity,
+                  url: `http://localhost:8282/api/product?searchText=${searchText}&categoryId=${categoryId}&page=${pageNumber}&sortType=${sortType}`,
+                  headers: {}
+            };
 
+            axios.request(config)
+                  .then((response) => {
+                        console.log(response.data);
+                        setData(response.data.content)
+                        setPageNumber(response.data.number)
+                        setTotalPages(response.data.totalPages)
+                        setTotalElements(response.data.totalElements)
+                  })
+                  .catch((error) => {
+                        alert(error.message);
+                  });
+
+      }, [searchText, categoryId, pageNumber, sortType])
       return (
             <div>
                   <Header />
@@ -48,8 +86,8 @@ function Shop() {
                                     <div className="col-lg-3">
                                           <div className="shop__sidebar">
                                                 <div className="shop__sidebar__search" >
-                                                      <form action="/">
-                                                            <input type="text" placeholder="Tìm kiếm..." />
+                                                      <form >
+                                                            <input type="text" value={searchText} placeholder="Tìm kiếm..." onChange={(e) => handleSearch(e.target.value)} />
                                                             <button type="submit"><FontAwesomeIcon icon={faMagnifyingGlass} /></button>
                                                       </form>
                                                 </div>
@@ -61,10 +99,18 @@ function Shop() {
                                                                         <div className="card-body">
                                                                               <div className="shop__sidebar__categories">
                                                                                     <ul className="nice-scroll">
-                                                                                          {listCart.map((cart, index) => {
-                                                                                                return <li className='cat-item' key={index} ><p className='cat-item'><FontAwesomeIcon icon={faCircle} style={{ color: "#000000", }} />   {cart.name}</p></li>
+                                                                                          <li ><p className='cat-item' style={{ color: categoryId == 0 ? 'red' : '' }} onClick={() => handleCategory(0)}> <FontAwesomeIcon icon={faCircle} style={{ color: "#000000", paddingRight: '5px' }} />Tất cả sản phẩm</p></li>
+                                                                                          {listCat.map((cart, index) => {
+                                                                                                return (
+                                                                                                      <li key={index} >
+
+                                                                                                            <p className='cat-item' style={{ color: cart.id == categoryId ? 'red' : '' }} onClick={() => handleCategory(`${cart.id}`)} >
+                                                                                                                  <FontAwesomeIcon icon={faCircle} style={{ color: "#000000", paddingRight: '5px' }} />
+                                                                                                                  {cart.name}
+                                                                                                            </p>
+                                                                                                      </li>
+                                                                                                )
                                                                                           })}
-                                                                                          <li ><p className='cat-item'> <FontAwesomeIcon icon={faCircle} style={{ color: "#000000", }} /> Tất cả sản phẩm</p></li>
                                                                                     </ul>
                                                                               </div>
                                                                         </div>
@@ -79,15 +125,15 @@ function Shop() {
                                                 <div className="row">
                                                       <div className="col-lg-6 col-md-6 col-sm-6">
                                                             <div className="shop__product__option__left">
-                                                                  <p>Tìm thấy 100 kết quả</p>
+                                                                  <p>Tìm thấy {totalElements} kết quả ({totalPages} trang)</p>
                                                             </div>
                                                       </div>
                                                       <div className="col-lg-6 col-md-6 col-sm-6">
                                                             <div className="shop__product__option__right">
                                                                   <p>Sắp xếp theo:</p>
-                                                                  <select className='select-sort'>
-                                                                        <option value="">Tăng dần</option>
-                                                                        <option value="">Giảm dần</option>
+                                                                  <select className='select-sort' onChange={(e) => handleSortType(e.target.value)} >
+                                                                        <option value="0" >Tăng dần</option>
+                                                                        <option value="1" >Giảm dần</option>
                                                                   </select>
                                                             </div>
                                                       </div>
@@ -99,25 +145,19 @@ function Shop() {
                                                       :
                                                       data.map((item, key) => {
                                                             return (
-                                                                  <div key={key} classNameName="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix">
-                                                                        <div classNameName="product__item">
-                                                                              <div classNameName="product__item__pic set-bg" style={{
+                                                                  <div key={key} className="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix">
+                                                                        <div className="product__item">
+                                                                              <div className="product__item__pic set-bg" style={{
                                                                                     backgroundSize: 'contain',
                                                                                     backgroundImage: `url(${item && item.productImages[0] && item.productImages[0].image ? item.productImages[0].image : ''})`,
-                                                                              }} >
-                                                                                    {/* <ul classNameName="product__hover">
-                                                                              <li><FontAwesomeIcon icon={faHeart} style={{ color: "#ff0000", }} /></li>
-                                                                        </ul> */}
+                                                                              }}>
                                                                               </div>
-                                                                              <div classNameName="product__item__text">
+                                                                              <div className="product__item__text">
                                                                                     <h5 style={{ padding: '20px' }}>{item.productName}</h5>
-                                                                                    <NavLink classNameName='see-detail' to="/" >Xem chi tiết</NavLink>
-                                                                                    {/* <div classNameName="rating">
-                                                                              <h6>5   <FontAwesomeIcon icon={faStar} style={{ color: "#f5e000", }} /></h6>
-                                                                        </div> */}
-                                                                                    <div classNameName='product_detail' >
-                                                                                          <h5 classNameName='product_price' >{item.price} VND </h5>
-                                                                                          <h5 classNameName='product_sold' >{item.sold} đã bán</h5>
+                                                                                    <NavLink className='see-detail' to="/product" state={{ productId: item.id }} >Xem chi tiết</NavLink>
+                                                                                    <div className='product_detail' >
+                                                                                          <h5 className='product_price' >{item.price} VND </h5>
+                                                                                          <h5 className='product_sold' >{item.sold} đã bán</h5>
                                                                                     </div>
 
                                                                               </div>
@@ -131,8 +171,14 @@ function Shop() {
                                           <div className="row">
                                                 <div className="col-lg-12">
                                                       <div className="product__pagination">
-                                                            <p className='page-number'>1</p>
-                                                            <p className='page-number active'>2</p>
+                                                            {pageNumber != 0 ? <p className='navigate-page' onClick={() => handlePage(0)}><FontAwesomeIcon icon={faArrowLeft} /> Trang đầu</p> : <></>}
+                                                            {pageNumber > 1 ? <p className='page-number' onClick={() => handlePage(pageNumber - 2)} >{pageNumber - 1}</p> : <></>}
+                                                            {pageNumber > 0 ? <p className='page-number' onClick={() => handlePage(pageNumber - 1)}>{pageNumber}</p> : <></>}
+                                                            <p className='page-number active'>{pageNumber + 1}</p>
+                                                            {pageNumber + 1 < totalPages ? <p className='page-number' onClick={() => handlePage(pageNumber + 1)}>{pageNumber + 2}</p> : <></>}
+                                                            {pageNumber + 2 < totalPages ? <p className='page-number' onClick={() => handlePage(pageNumber + 2)}>{pageNumber + 3}</p> : <></>}
+                                                            {pageNumber != totalPages - 1 ? <p className='navigate-page' onClick={() => handlePage(totalPages - 1)} >Trang cuối <FontAwesomeIcon icon={faArrowRight} /></p> : <></>}
+
                                                       </div>
                                                 </div>
                                           </div>
