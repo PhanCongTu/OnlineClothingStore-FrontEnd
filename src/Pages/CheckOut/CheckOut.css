@@ -1,0 +1,39 @@
+.intro_cart {
+  padding: 20px 200px;
+  background-color: rgb(227, 226, 226);
+}
+.intro_name {
+  font-weight: 700;
+}
+.checkout__input__checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 20px;
+}
+.btn_dat_hang {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn_dat_hang:hover {
+  background-color: aliceblue;
+  border: 2px solid rgb(0, 0, 0);
+  color: black;
+  cursor: pointer;
+}
+.input_text {
+  font-size: x-large;
+  color: black !important;
+  font-weight: 500;
+}
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: red;
+  color: aliceblue !important;
+  font-size: larger;
+  font-weight: 700;
+  border-radius: 5px;
+}

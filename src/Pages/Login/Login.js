@@ -13,6 +13,7 @@ function Login() {
             username: '',
             password: ''
       });
+      const [loginFlase, setLoginFlase] = useState(false);
       const handleChange = (e) => {
             const { name, value } = e.target
             setLogin({ ...login, [name]: value })
@@ -42,7 +43,7 @@ function Login() {
                         //  console.log(response.data);
                   })
                   .catch((error) => {
-                        console.log(error);
+                        setLoginFlase(true)
                   });
       }
       return (
@@ -57,7 +58,7 @@ function Login() {
                                     <h1 className="d-flex justify-content-around align-items-center mb-4">Chào mừng trở lại</h1>
                                     <form>
                                           <div className="form-outline mb-4">
-                                                <label className="form-label" htmlFor="Username">Username</label>
+                                                <label className="form-label" htmlFor="Username">Tên đăng nhập</label>
                                                 <input type="email" id="Username" className="form-control form-control-lg"
                                                       value={login.username}
                                                       name="username"
@@ -65,7 +66,7 @@ function Login() {
                                           </div>
 
                                           <div className="form-outline mb-4">
-                                                <label className="form-label" htmlFor="form1Example23">Password</label>
+                                                <label className="form-label" htmlFor="form1Example23">Mật khẩu</label>
                                                 <input type="password" id="form1Example23" className="form-control form-control-lg"
                                                       value={login.password}
                                                       name="password"
@@ -78,11 +79,17 @@ function Login() {
                                                             onChange={handleRememberMe}
                                                             checked={rememberMe}
                                                       />
-                                                      <label className="form-check-label" htmlFor="form1Example3"> Remember me</label>
+                                                      <label className="form-check-label" htmlFor="form1Example3"> Ghi nhớ tài khoản</label>
                                                 </div>
                                           </div>
+                                          {loginFlase ?
+                                                <div className="d-flex justify-content-around align-items-center  ">
+                                                      <h6 style={{ color: 'red' }}>Tên đăn nhập hoặc mật khẩu không đúng</h6>
+                                                </div>
+                                                : <></>}
+
                                           <div className="d-flex justify-content-center align-items-center mb-4">
-                                                <h3 onClick={handleSubmit} className=" btn btn-success btn-lg btn-block">Sign in</h3>
+                                                <h3 onClick={handleSubmit} className=" btn btn-success btn-lg btn-block">Đăng nhập</h3>
                                           </div>
                                     </form>
                                     <div className="d-flex justify-content-center align-items-center mb-4">

@@ -170,7 +170,7 @@ function Shop() {
                                           </div>
                                           <div className="row">
                                                 <div className="col-lg-12">
-                                                      <div className="product__pagination">
+                                                      {totalPages > 0 ? <div className="product__pagination">
                                                             {pageNumber != 0 ? <p className='navigate-page' onClick={() => handlePage(0)}><FontAwesomeIcon icon={faArrowLeft} /> Trang đầu</p> : <></>}
                                                             {pageNumber > 1 ? <p className='page-number' onClick={() => handlePage(pageNumber - 2)} >{pageNumber - 1}</p> : <></>}
                                                             {pageNumber > 0 ? <p className='page-number' onClick={() => handlePage(pageNumber - 1)}>{pageNumber}</p> : <></>}
@@ -178,8 +178,8 @@ function Shop() {
                                                             {pageNumber + 1 < totalPages ? <p className='page-number' onClick={() => handlePage(pageNumber + 1)}>{pageNumber + 2}</p> : <></>}
                                                             {pageNumber + 2 < totalPages ? <p className='page-number' onClick={() => handlePage(pageNumber + 2)}>{pageNumber + 3}</p> : <></>}
                                                             {pageNumber != totalPages - 1 ? <p className='navigate-page' onClick={() => handlePage(totalPages - 1)} >Trang cuối <FontAwesomeIcon icon={faArrowRight} /></p> : <></>}
+                                                      </div> : <></>}
 
-                                                      </div>
                                                 </div>
                                           </div>
                                     </div>

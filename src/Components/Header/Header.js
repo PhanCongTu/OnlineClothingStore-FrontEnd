@@ -38,8 +38,8 @@ function Header() {
                                                             <span className='username'>{LoginedUser.fullName}</span>
                                                             <ul>
                                                                   <li className='user-option'>Chỉnh sửa tài khoản</li>
-                                                                  <li className='user-option'>Giỏ hàng</li>
-                                                                  <li className='user-option'>Lịch sử mua hàng</li>
+                                                                  <li className='user-option' onClick={() => (navigate('/cart'))}>Giỏ hàng</li>
+                                                                  <li className='user-option' onClick={() => (navigate('/myorder'))}>Lịch sử mua hàng</li>
                                                                   <li className='user-option' onClick={handleLogout}><strong>Đăng suất</strong></li>
                                                             </ul>
                                                       </div>

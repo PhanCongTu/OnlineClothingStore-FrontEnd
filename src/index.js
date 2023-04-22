@@ -8,6 +8,9 @@ import Login from './Pages/Login/Login';
 import Register from './Pages/Register/Register';
 import Shop from './Pages/Shop/Shop';
 import ProductDetail from './Pages/ProductDetail/ProductDetail';
+import Cart from './Pages/Cart/Cart';
+import CheckOut from './Pages/CheckOut/CheckOut';
+import MyOrder from './Pages/MyOrder/MyOrder';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -20,6 +23,9 @@ root.render(
           <Route path='/register' element={<Register />} />
           <Route path='/shop' element={<Shop />} />
           <Route path="/product" element={<ProductDetail />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<CheckOut />} />
+          <Route path="/myorder" element={<MyOrder />} />
         </Routes>
       </div>
     </Router>
