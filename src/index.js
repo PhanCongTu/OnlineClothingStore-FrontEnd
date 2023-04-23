@@ -11,6 +11,7 @@ import ProductDetail from './Pages/ProductDetail/ProductDetail';
 import Cart from './Pages/Cart/Cart';
 import CheckOut from './Pages/CheckOut/CheckOut';
 import MyOrder from './Pages/MyOrder/MyOrder';
+import MyProfile from './Pages/MyProfile/MyProfile';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -26,6 +27,7 @@ root.render(
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<CheckOut />} />
           <Route path="/myorder" element={<MyOrder />} />
+          <Route path="/myprofile" element={<MyProfile />} />
         </Routes>
       </div>
     </Router>

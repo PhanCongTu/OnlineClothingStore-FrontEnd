@@ -137,7 +137,7 @@ function CheckOut() {
 
             axios.request(config2)
                   .then((response) => {
-                        navigate('/shop')
+                        navigate('/myorder')
                   })
                   .catch((error) => {
                         alert(error.message);
@@ -161,7 +161,7 @@ function CheckOut() {
                                                       <div className="row">
                                                             <div className="col-lg-6">
                                                                   <div className="checkout__input" >
-                                                                        <p>Họ và tên<span>*</span> {name}</p>
+                                                                        <p>Họ và tên<span>*</span></p>
                                                                         <input className='input_text' type="text" name="name" value={name}
                                                                               onChange={(e) => handleChangeName(e)}
                                                                               placeholder="Vui lòng nhập họ và tên" />
@@ -169,7 +169,7 @@ function CheckOut() {
                                                             </div>
                                                             <div className="col-lg-6">
                                                                   <div className="checkout__input">
-                                                                        <p>Số điện thoại<span>*</span> {phoneNumber}</p>
+                                                                        <p>Số điện thoại<span>*</span></p>
                                                                         <input className='input_text' type="number" name="phoneNumber" value={phoneNumber}
                                                                               onChange={(e) => handleChangePhoneNumber(e)}
                                                                               placeholder="Vui lòng nhập số điện thoại" />
@@ -177,20 +177,20 @@ function CheckOut() {
                                                             </div>
                                                       </div>
                                                       <div className="checkout__input">
-                                                            <p>Email {email}</p>
+                                                            <p>Email</p>
                                                             <input className='input_text' type="text" name='email' value={email}
                                                                   onChange={(e) => handleChangeEmail(e)}
                                                                   placeholder="Vui lòng nhập email" />
                                                       </div>
                                                       <div className="checkout__input">
-                                                            <p>Địa chỉ<span>*</span> {address}</p>
+                                                            <p>Địa chỉ<span>*</span></p>
                                                             <input type="text" name='address' value={address}
                                                                   onChange={(e) => handleChangeAddress(e)}
                                                                   placeholder="Vui lòng nhập địa chỉ" className="checkout__input__add input_text" />
                                                       </div>
 
                                                       <div className="checkout__input">
-                                                            <p>Ghi chú {note}</p>
+                                                            <p>Ghi chú</p>
                                                             <input className='input_text' type="text" value={note} name='note'
                                                                   onChange={(e) => handleChangeNote(e)}
                                                                   placeholder="Ghi chú dành cho chủ cửa hàng và shiper" />

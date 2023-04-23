@@ -37,7 +37,7 @@ function Header() {
                                                       <div className="header__top__hover pr-5">
                                                             <span className='username'>{LoginedUser.fullName}</span>
                                                             <ul>
-                                                                  <li className='user-option'>Chỉnh sửa tài khoản</li>
+                                                                  <li className='user-option' onClick={() => (navigate('/myprofile'))}>Tài khoản của tôi</li>
                                                                   <li className='user-option' onClick={() => (navigate('/cart'))}>Giỏ hàng</li>
                                                                   <li className='user-option' onClick={() => (navigate('/myorder'))}>Lịch sử mua hàng</li>
                                                                   <li className='user-option' onClick={handleLogout}><strong>Đăng suất</strong></li>

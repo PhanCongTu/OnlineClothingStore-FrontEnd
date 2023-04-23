@@ -21,7 +21,7 @@
   letter-spacing: 2px;
   text-transform: uppercase;
   border: 1px solid #e1e1e1;
-  padding: 14px 35px;
+  padding: 16px;
   display: inline-block;
 }
 .continue__btn:hover {
@@ -30,6 +30,7 @@
   cursor: pointer;
 }
 .continue__btn.update__btn {
+  width: auto;
   float: right;
   color: #ffffff;
   background: #111111;

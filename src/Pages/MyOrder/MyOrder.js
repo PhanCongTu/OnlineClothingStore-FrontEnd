@@ -46,7 +46,7 @@ function MyOrder() {
                         <div className="container ">
                               {data.length > 0 ? data?.map((order) => {
                                     var myDate = new Date(order.createAt);
-                                    var final_date = myDate.getHours() + ":" + myDate.getMinutes() + " " + myDate.getDay() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getFullYear();
+                                    var final_date = myDate.getHours() + ":" + myDate.getMinutes() + " " + myDate.getDate() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getFullYear();
                                     return (
                                           <div className="row ">
                                                 <div>
