@@ -10,6 +10,8 @@ import './MyProfile.css'
 import Header from '../../Components/Header/Header'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import FormData from 'form-data'
+
 import defaultAvatar from '../../Image/default-avatar.png'
 function MyProfile() {
       const navigate = useNavigate();
@@ -25,7 +27,9 @@ function MyProfile() {
       const [newPassword, setNewPassword] = useState('')
       const [renewPassword, setRenewPassword] = useState('')
       const [empty, setEmpty] = useState(false)
-      const [failPassword, setFailPassword] = useState('')
+      const [passwordMessage, setPasswordMessage] = useState('')
+      const [updateMessage, setUpdateMessage] = useState('')
+      // const [rerender, setRerender] = useState(false) // use to update data from backend in frontend
       const handleChangeName = (e) => {
             if (e.target.value === '') setEmpty(true)
             else setEmpty(false)
@@ -49,9 +53,9 @@ function MyProfile() {
       }
       const ChangePassword = () => {
             if (oldPassword === '' || newPassword === '' || renewPassword === '')
-                  setFailPassword('Không Được bỏ trống')
+                  setPasswordMessage('Không Được bỏ trống')
             else if (newPassword !== renewPassword)
-                  setFailPassword('Mật khẩu mới không trùng khớp')
+                  setPasswordMessage('Mật khẩu mới không trùng khớp')
             else {
                   let data = JSON.stringify({
                         "oldPassword": `${oldPassword}`,
@@ -71,10 +75,16 @@ function MyProfile() {
 
                   axios.request(config)
                         .then((response) => {
-                              setFailPassword('Đổi mật khẩu thành công')
+                              setPasswordMessage('Đổi mật khẩu thành công')
+                              setOldPassword('')
+                              setNewPassword('')
+                              setRenewPassword('')
+                              setTimeout(() => {
+                                    setPasswordMessage('')
+                              }, 2000)
                         })
                         .catch((error) => {
-                              setFailPassword('Mật khẩu không chính xác')
+                              setPasswordMessage('Mật khẩu không chính xác')
                         });
             }
       }
@@ -102,6 +112,60 @@ function MyProfile() {
                   });
 
       }, [])
+      const handleUploadFile = (e) => {
+            // Nhớ chỉnh lại thẻ <img> nếu có thay đổi phương thức upload
+            // cloud upload
+            // let url = 'http://localhost:8282/files/cloud/upload';
+            // local upload
+            let url = 'http://localhost:8282/files/local/upload';
+
+
+            const data = new FormData()
+            data.append('file', e.target.files[0])
+
+            axios.post(url, data, {
+            })
+                  .then(res => {
+                        setAvatar(res.data)
+                  })
+                  .catch((error) => {
+                        alert(error.message);
+                  })
+
+      }
+
+      const handleUpdate = () => {
+            /// Update lại thông tin user
+            let data = JSON.stringify({
+                  "name": `${name}`,
+                  "avatar": `${avatar}`,
+                  "phoneNumber": `${phoneNumber}`,
+                  "email": `${email}`
+            });
+
+            let config = {
+                  method: 'put',
+                  maxBodyLength: Infinity,
+                  url: 'http://localhost:8282/api/user/update',
+                  headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${LoginedUser.token}`
+                  },
+                  data: data
+            };
+
+            axios.request(config)
+                  .then((response) => {
+                        setUpdateMessage('Cập nhật thành công')
+                        setTimeout(() => {
+                              setUpdateMessage('')
+                        }, 2000)
+                  })
+                  .catch((error) => {
+                        alert(error.message);
+                        // navigate('/login')
+                  });
+      }
       return (
             <div>
                   <Header />
@@ -147,26 +211,26 @@ function MyProfile() {
                                                       <br></br>
                                                       <br></br>
                                                       <h5 className="checkout__title">Đổi mật khẩu</h5>
-                                                      {failPassword !== '' ?
-                                                            <p style={{ color: 'red' }} >{failPassword}</p>
+                                                      {passwordMessage !== '' ?
+                                                            <p style={{ color: 'red' }} >{passwordMessage}</p>
                                                             :
                                                             <></>}
                                                       <div className="checkout__input">
                                                             <p>Mật khẩu cũ<span>*</span></p>
-                                                            <input type="text" name='address' value={oldPassword}
+                                                            <input type="password" name='address' value={oldPassword}
                                                                   onChange={(e) => handleChangeOldPassword(e)}
                                                                   placeholder="Nhập mật khẩu cũ" className="checkout__input__add input_text" />
                                                       </div>
 
                                                       <div className="checkout__input">
                                                             <p>Mật khẩu mới<span>*</span></p>
-                                                            <input className='input_text' type="text" value={newPassword} name='note'
+                                                            <input className='input_text' type="password" value={newPassword} name='note'
                                                                   onChange={(e) => handleChangeNewPassword(e)}
                                                                   placeholder="Nhập mật khẩu mới" />
                                                       </div>
                                                       <div className="checkout__input">
                                                             <p>Nhập lại mật khẩu mới<span>*</span></p>
-                                                            <input className='input_text' type="text" value={renewPassword} name='note'
+                                                            <input className='input_text' type="password" value={renewPassword} name='note'
                                                                   onChange={(e) => handleChangeRenewPassword(e)}
                                                                   placeholder="Nhập lại mật khẩu mới" />
                                                       </div>
@@ -176,11 +240,17 @@ function MyProfile() {
                                                       <div className="checkout__order">
                                                             <h4 className="order__title">Ảnh đại diện</h4>
                                                             <div>
-                                                                  <img className='avatar' src={avatar !== 'null' ? avatar : defaultAvatar} alt='' />
+                                                                  <img className='avatar' src={avatar !== 'null' ? `http://${avatar}` : defaultAvatar} alt='' />
+                                                                  {/* <img className='avatar' src={avatar !== 'null' ? avatar : defaultAvatar} alt='' /> */}
                                                             </div>
-                                                            <input type='file' />
+                                                            <input type='file' name="file" onChange={(e) => handleUploadFile(e)} />
+                                                            {updateMessage !== '' ?
+                                                                  <p className='update-success' >Chỉnh sửa thông tin thành công</p>
+                                                                  :
+                                                                  <></>}
+
                                                             {!empty ?
-                                                                  <div className="site-btn btn_dat_hang">Chỉnh sửa</div>
+                                                                  <div className="site-btn btn_dat_hang" onClick={handleUpdate} >Chỉnh sửa</div>
                                                                   :
                                                                   <p>Không được bỏ trống họ và tên</p>}
 

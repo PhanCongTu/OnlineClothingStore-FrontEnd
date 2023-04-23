@@ -7,8 +7,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './Register.css'
 function Register() {
       const navigate = useNavigate();
-      const [registerSucess, setRegisterSucess] = useState(false);
-      const [count, setCount] = useState(3);
       // declaring initial state
       const [state, setState] = useState({
             name: '',
@@ -17,15 +15,22 @@ function Register() {
             phoneNumber: '',
             email: ''
       });
+      const [login, setLogin] = useState({
+            username: '',
+            password: ''
+      })
       const handleChange = (e) => {
             const { name, value } = e.target
             setState({ ...state, [name]: value })
+
       }
       const handleSubmit = () => {
             // if (name === '' ||
             //       userName === '' ||
             //       password === '')
-
+            login.username = state.userName
+            login.password = state.password
+            console.log(login)
             let data = JSON.stringify(state);
 
             let config = {
@@ -40,16 +45,30 @@ function Register() {
 
             axios.request(config)
                   .then((response) => {
+
                         console.log(JSON.stringify(response.data));
                         // this.props.history.replace('/logiAnalyserNode
-                        setRegisterSucess(true)
-                        let timerId = setInterval(() => {
-                              setCount(count => count - 1)
-                        }, 1000)
-                        setTimeout(() => {
-                              clearInterval(timerId)
-                              navigate('/login');
-                        }, 3000);
+                        let dataLogin = JSON.stringify(login);
+                        let config = {
+                              method: 'post',
+                              maxBodyLength: Infinity,
+                              url: 'http://localhost:8282/api/login',
+                              headers: {
+                                    'Content-Type': 'application/json'
+                              },
+                              data: dataLogin
+                        };
+
+                        axios.request(config)
+                              .then((response) => {
+                                    navigate('/');
+                                    sessionStorage.setItem('LoginedUser', JSON.stringify(response.data));
+                                    //  console.log(response.data);
+                              })
+                              .catch((error) => {
+                                    console.log(error);
+                              });
+
                   })
                   .catch((error) => {
                         console.log(error);
@@ -65,69 +84,58 @@ function Register() {
                               </div>
                               <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
 
-                                    {registerSucess ?
-                                          <>
-                                                <div className="d-flex justify-content-center align-items-center mb-1">
-                                                      <p style={{ color: '#04d420', fontSize: '20px' }}>Đăng ký thành công</p>
-                                                </div>
-                                                <div className="d-flex justify-content-center align-items-center mb-1">
-                                                      <p style={{ color: '#000000', fontSize: '20px' }}>Chuyển trang trong {count} giây</p>
-                                                </div>
-                                          </>
-                                          :
-                                          <>
-                                                <h1 className="d-flex justify-content-around align-items-center mb-4">Đăng ký tài khoản</h1>
-                                                <form>
-                                                      <div className="form-outline mb-4">
-                                                            <label className="form-label" htmlFor="name">Họ và tên*</label>
-                                                            <input type="text" id="name" className="form-control form-control-lg"
-                                                                  value={state.name}
-                                                                  name="name"
-                                                                  onChange={e => handleChange(e)} />
 
-                                                            <label className="form-label" htmlFor="Username">Tên đăng nhập* </label>
-                                                            <input type="text" id="Username" className="form-control form-control-lg"
-                                                                  value={state.userName}
-                                                                  name="userName"
-                                                                  onChange={e => handleChange(e)} />
+                                    <h1 className="d-flex justify-content-around align-items-center mb-4">Đăng ký tài khoản</h1>
+                                    <form>
+                                          <div className="form-outline mb-4">
+                                                <label className="form-label" htmlFor="name">Họ và tên*</label>
+                                                <input type="text" id="name" className="form-control form-control-lg"
+                                                      value={state.name}
+                                                      name="name"
+                                                      onChange={e => handleChange(e)} />
 
-                                                            <label className="form-label" htmlFor="password">Mật khẩu* </label>
-                                                            <input type="password" id="password" className="form-control form-control-lg"
-                                                                  value={state.password}
-                                                                  name="password"
-                                                                  onChange={e => handleChange(e)} />
+                                                <label className="form-label" htmlFor="Username">Tên đăng nhập* </label>
+                                                <input type="text" id="Username" className="form-control form-control-lg"
+                                                      value={state.userName}
+                                                      name="userName"
+                                                      onChange={e => handleChange(e)} />
 
-                                                            <label className="form-label" htmlFor="phoneNumber">Số điện thoại </label>
-                                                            <input type="number" id="phoneNumber" className="form-control form-control-lg"
-                                                                  value={state.phoneNumber}
-                                                                  name="phoneNumber"
-                                                                  onChange={e => handleChange(e)} />
+                                                <label className="form-label" htmlFor="password">Mật khẩu* </label>
+                                                <input type="password" id="password" className="form-control form-control-lg"
+                                                      value={state.password}
+                                                      name="password"
+                                                      onChange={e => handleChange(e)} />
 
-                                                            <label className="form-label" htmlFor="email">Email </label>
-                                                            <input type="email" id="email" className="form-control form-control-lg"
-                                                                  value={state.email}
-                                                                  name="email"
-                                                                  onChange={e => handleChange(e)} />
-                                                      </div>
+                                                <label className="form-label" htmlFor="phoneNumber">Số điện thoại </label>
+                                                <input type="number" id="phoneNumber" className="form-control form-control-lg"
+                                                      value={state.phoneNumber}
+                                                      name="phoneNumber"
+                                                      onChange={e => handleChange(e)} />
 
-                                                      <div className="d-flex justify-content-center align-items-center mb-4">
+                                                <label className="form-label" htmlFor="email">Email </label>
+                                                <input type="email" id="email" className="form-control form-control-lg"
+                                                      value={state.email}
+                                                      name="email"
+                                                      onChange={e => handleChange(e)} />
+                                          </div>
 
-                                                            <h3 onClick={handleSubmit} className=" btn btn-success btn-lg btn-block">Đăng ký</h3>
-                                                      </div>
-                                                </form>
+                                          <div className="d-flex justify-content-center align-items-center mb-4">
 
-                                                <div className="d-flex justify-content-center align-items-center mb-4">
-                                                      <NavLink style={{ textDecoration: 'none' }} to="/login" className="my-link">
-                                                            Đã có tài khoản? Đăng nhập
-                                                      </NavLink>
-                                                </div>
-                                                <div className="float-right">
-                                                      <NavLink style={{ textDecoration: 'none', color: '#ff0000', fontSize: '18px' }} to="/" className="my-link">
-                                                            Trở về trang chủ <FontAwesomeIcon icon={faArrowRight} />
-                                                      </NavLink>
+                                                <h3 onClick={handleSubmit} className=" btn btn-success btn-lg btn-block">Đăng ký</h3>
+                                          </div>
+                                    </form>
 
-                                                </div>
-                                          </>}
+                                    <div className="d-flex justify-content-center align-items-center mb-4">
+                                          <NavLink style={{ textDecoration: 'none' }} to="/login" className="my-link">
+                                                Đã có tài khoản? Đăng nhập
+                                          </NavLink>
+                                    </div>
+                                    <div className="float-right">
+                                          <NavLink style={{ textDecoration: 'none', color: '#ff0000', fontSize: '18px' }} to="/" className="my-link">
+                                                Trở về trang chủ <FontAwesomeIcon icon={faArrowRight} />
+                                          </NavLink>
+
+                                    </div>
                               </div>
                         </div>
                   </div>
