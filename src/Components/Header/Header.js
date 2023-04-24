@@ -16,6 +16,8 @@ function Header() {
       if (!LoginedUser) {
             LoginedUser = JSON.parse(localStorage.getItem('LoginedUser'));
       }
+      const checkAdmin = (role) => role == 'ROLE_ADMIN'
+      const checkUser = (role) => role == 'ROLE_USER'
       const handleLogout = () => {
             sessionStorage.removeItem('LoginedUser')
             localStorage.removeItem('LoginedUser')
@@ -38,8 +40,22 @@ function Header() {
                                                             <span className='username'>{LoginedUser.fullName}</span>
                                                             <ul>
                                                                   <li className='user-option' onClick={() => (navigate('/myprofile'))}>Tài khoản của tôi</li>
-                                                                  <li className='user-option' onClick={() => (navigate('/cart'))}>Giỏ hàng</li>
-                                                                  <li className='user-option' onClick={() => (navigate('/myorder'))}>Lịch sử mua hàng</li>
+
+                                                                  {LoginedUser?.roles.some(checkUser) ?
+                                                                        <>
+                                                                              <li className='user-option' onClick={() => (navigate('/cart'))}>Giỏ hàng</li>
+                                                                              <li className='user-option' onClick={() => (navigate('/myorder'))}>Lịch sử mua hàng</li>
+                                                                        </>
+
+                                                                        :
+                                                                        <></>
+                                                                  }
+                                                                  {LoginedUser?.roles.some(checkAdmin) ?
+                                                                        <li className='user-option' style={{ color: 'red', fontWeight: '600' }} onClick={() => (navigate('/category'))}>Dành cho quản trị viên</li>
+                                                                        :
+                                                                        <></>
+                                                                  }
+
                                                                   <li className='user-option' onClick={handleLogout}><strong>Đăng suất</strong></li>
                                                             </ul>
                                                       </div>

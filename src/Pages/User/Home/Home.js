@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import '../../css/bootstrap.min.css'
-import '../../css/magnific-popup.css'
-import '../../css/nice-select.css'
-import '../../css/slicknav.min.css'
-import '../../css/style.css'
-import '../../css/style.css.map'
-import '../../css/slicknav.min.css'
+import '../../../css/bootstrap.min.css'
+import '../../../css/magnific-popup.css'
+import '../../../css/nice-select.css'
+import '../../../css/slicknav.min.css'
+import '../../../css/style.css'
+import '../../../css/style.css.map'
+import '../../../css/slicknav.min.css'
 import './Home.css'
-import Header from '../../Components/Header/Header'
+import Header from '../../../Components/Header/Header'
 import axios from 'axios';
 import { NavLink } from 'react-router-dom'
 
-// m dang o home.js  ./ là lấy thư mục hiện tại,   ../ lùi lại 1 thư mục  -> page ../../ -> src trong src có css pages cùng cấp thì trỏ để
-// đến css bằng ../../css hoặc m chơi đường dẫn  tuyệt đối
+
 function Home() {
       const [option, setOption] = useState('best-selling');
       const handleOption = (choose) => {
@@ -66,7 +65,7 @@ function Home() {
                                                                   </div>
                                                                   <div className="product__item__text">
                                                                         <h5 style={{ padding: '20px' }}>{item.productName}</h5>
-                                                                        <NavLink className='see-detail' to="/product" state={{ productId: item.id }} >Xem chi tiết</NavLink>
+                                                                        <NavLink className='see-detail' to="/product-detail" state={{ productId: item.id }} >Xem chi tiết</NavLink>
 
                                                                         <div className='product_detail' >
                                                                               <h5 className='product_price' >{item.price} VND </h5>

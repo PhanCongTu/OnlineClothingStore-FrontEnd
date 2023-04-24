@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import '../../css/bootstrap.min.css'
-import '../../css/magnific-popup.css'
-import '../../css/nice-select.css'
-import '../../css/slicknav.min.css'
-import '../../css/style.css'
-import '../../css/style.css.map'
-import '../../css/slicknav.min.css'
+import '../../../css/bootstrap.min.css'
+import '../../../css/magnific-popup.css'
+import '../../../css/nice-select.css'
+import '../../../css/slicknav.min.css'
+import '../../../css/style.css'
+import '../../../css/style.css.map'
+import '../../../css/slicknav.min.css'
 import './MyOrder.css'
-import Header from '../../Components/Header/Header'
+import Header from '../../../Components/Header/Header'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 function MyOrder() {
@@ -79,7 +79,12 @@ function MyOrder() {
                                                                               <tr className='tr-text'>
                                                                                     <td className="product__cart__item">
                                                                                           <div className="product__cart__item__pic">
-                                                                                                <img className='product_img' src={item.product?.productImages[0].image} alt="" />
+                                                                                                {item.product?.productImages[0].image.includes('uploads') ?
+                                                                                                      <img className='product_img' src={`http://${item.product?.productImages[0].image}`} alt='' />
+                                                                                                      :
+                                                                                                      <img className='product_img' src={`${item.product?.productImages[0].image}`} alt='' />
+                                                                                                }
+                                                                                                {/* <img className='product_img' src={item.product?.productImages[0].image} alt="" /> */}
                                                                                           </div>
                                                                                           <div className="product__cart__item__text">
                                                                                                 <h6>{item.product.productName}</h6>

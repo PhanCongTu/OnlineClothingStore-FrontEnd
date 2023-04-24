@@ -3,15 +3,18 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import reportWebVitals from './reportWebVitals';
 
-import Home from './Pages/Home/Home';
-import Login from './Pages/Login/Login';
-import Register from './Pages/Register/Register';
-import Shop from './Pages/Shop/Shop';
-import ProductDetail from './Pages/ProductDetail/ProductDetail';
-import Cart from './Pages/Cart/Cart';
-import CheckOut from './Pages/CheckOut/CheckOut';
-import MyOrder from './Pages/MyOrder/MyOrder';
-import MyProfile from './Pages/MyProfile/MyProfile';
+import Home from './Pages/User/Home/Home';
+import Login from './Pages/User/Login/Login';
+import Register from './Pages/User/Register/Register';
+import Shop from './Pages/User/Shop/Shop';
+import ProductDetail from './Pages/User/ProductDetail/ProductDetail';
+import Cart from './Pages/User/Cart/Cart';
+import CheckOut from './Pages/User/CheckOut/CheckOut';
+import MyOrder from './Pages/User/MyOrder/MyOrder';
+import MyProfile from './Pages/User/MyProfile/MyProfile';
+import Category from './Pages/Admin/Category/Category';
+import Product from './Pages/Admin/Product/Product';
+import ProductImageAndSize from './Pages/Admin/ProductImageAndSize/ProductImageAndSize';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -23,11 +26,15 @@ root.render(
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/shop' element={<Shop />} />
-          <Route path="/product" element={<ProductDetail />} />
+          <Route path="/product-detail" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<CheckOut />} />
           <Route path="/myorder" element={<MyOrder />} />
           <Route path="/myprofile" element={<MyProfile />} />
+          <Route path="/category" element={<Category />} />
+          <Route path="/product" element={<Product />} />
+          <Route path="/product-image-size" element={<ProductImageAndSize />} />
+
         </Routes>
       </div>
     </Router>

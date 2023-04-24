@@ -1,0 +1,11 @@
+.new_product_label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 5px 5px 20px;
+  font-size: medium;
+  font-weight: 500;
+}
+.container {
+  width: 100%;
+}

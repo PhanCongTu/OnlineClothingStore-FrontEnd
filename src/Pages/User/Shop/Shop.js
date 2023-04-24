@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import '../../css/bootstrap.min.css'
-import '../../css/magnific-popup.css'
-import '../../css/nice-select.css'
-import '../../css/slicknav.min.css'
-import '../../css/style.css'
-import '../../css/style.css.map'
-import '../../css/slicknav.min.css'
+import '../../../css/bootstrap.min.css'
+import '../../../css/magnific-popup.css'
+import '../../../css/nice-select.css'
+import '../../../css/slicknav.min.css'
+import '../../../css/style.css'
+import '../../../css/style.css.map'
+import '../../../css/slicknav.min.css'
 import './Shop.css'
-import Header from '../../Components/Header/Header'
+import Header from '../../../Components/Header/Header'
 import { NavLink } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faArrowRight, faCircle, faListUl, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
@@ -154,7 +154,7 @@ function Shop() {
                                                                               </div>
                                                                               <div className="product__item__text">
                                                                                     <h5 style={{ padding: '20px' }}>{item.productName}</h5>
-                                                                                    <NavLink className='see-detail' to="/product" state={{ productId: item.id }} >Xem chi tiết</NavLink>
+                                                                                    <NavLink className='see-detail' to="/product-detail" state={{ productId: item.id }} >Xem chi tiết</NavLink>
                                                                                     <div className='product_detail' >
                                                                                           <h5 className='product_price' >{item.price} VND </h5>
                                                                                           <h5 className='product_sold' >{item.sold} đã bán</h5>

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import '../../css/bootstrap.min.css'
-import '../../css/magnific-popup.css'
-import '../../css/nice-select.css'
-import '../../css/slicknav.min.css'
-import '../../css/style.css'
-import '../../css/style.css.map'
-import '../../css/slicknav.min.css'
+import '../../../css/bootstrap.min.css'
+import '../../../css/magnific-popup.css'
+import '../../../css/nice-select.css'
+import '../../../css/slicknav.min.css'
+import '../../../css/style.css'
+import '../../../css/style.css.map'
+import '../../../css/slicknav.min.css'
 import './Cart.css'
-import Header from '../../Components/Header/Header'
+import Header from '../../../Components/Header/Header'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleLeft, faAngleRight, faTruck, faXmark } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
@@ -124,11 +124,16 @@ function Cart() {
                                                                         <tr key={index} id={`id-${cartItem.id}`} >
                                                                               <td className="product__cart__item">
                                                                                     <div className="product__cart__item__pic">
-                                                                                          <img className='product_img' src={`${cartItem.product.productImages[0].image}`} alt="" />
+                                                                                          {cartItem.product.productImages[0].image.includes('uploads') ?
+                                                                                                <img className='product_img' src={`http://${cartItem.product.productImages[0].image}`} alt='' />
+                                                                                                :
+                                                                                                <img className='product_img' src={`${cartItem.product.productImages[0].image}`} alt='' />
+                                                                                          }
+                                                                                          {/* <img className='product_img' src={`${cartItem.product.productImages[0].image}`} alt="" /> */}
                                                                                     </div>
                                                                                     <div className="product__cart__item__text">
                                                                                           {/* <h6>{cartItem.product.productName}</h6> */}
-                                                                                          <NavLink className='product_item_name' to="/product" state={{ productId: cartItem.product.id }} >{cartItem.product.productName}</NavLink>
+                                                                                          <NavLink className='product_item_name' to="/product-detail" state={{ productId: cartItem.product.id }} >{cartItem.product.productName}</NavLink>
                                                                                           <h5>{cartItem.product.price} VND</h5>
                                                                                     </div>
                                                                               </td>

@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import '../../css/bootstrap.min.css'
-import '../../css/magnific-popup.css'
-import '../../css/nice-select.css'
-import '../../css/slicknav.min.css'
-import '../../css/style.css'
-import '../../css/style.css.map'
-import '../../css/slicknav.min.css'
+import '../../../css/bootstrap.min.css'
+import '../../../css/magnific-popup.css'
+import '../../../css/nice-select.css'
+import '../../../css/slicknav.min.css'
+import '../../../css/style.css'
+import '../../../css/style.css.map'
+import '../../../css/slicknav.min.css'
 import './MyProfile.css'
-import Header from '../../Components/Header/Header'
+import Header from '../../../Components/Header/Header'
+import defaultAvatar from '../../../Image/default-avatar.png'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import FormData from 'form-data'
 
-import defaultAvatar from '../../Image/default-avatar.png'
 function MyProfile() {
       const navigate = useNavigate();
       let LoginedUser = JSON.parse(sessionStorage.getItem('LoginedUser'));
@@ -240,8 +240,12 @@ function MyProfile() {
                                                       <div className="checkout__order">
                                                             <h4 className="order__title">Ảnh đại diện</h4>
                                                             <div>
-                                                                  <img className='avatar' src={avatar !== 'null' ? `http://${avatar}` : defaultAvatar} alt='' />
-                                                                  {/* <img className='avatar' src={avatar !== 'null' ? avatar : defaultAvatar} alt='' /> */}
+                                                                  {avatar.includes('uploads') ?
+                                                                        <img className='product-image' src={avatar !== null ? `http://${avatar}` : defaultAvatar} alt='' />
+                                                                        :
+                                                                        <img className='product-image' src={avatar !== null ? avatar : defaultAvatar} alt='' />
+                                                                  }
+
                                                             </div>
                                                             <input type='file' name="file" onChange={(e) => handleUploadFile(e)} />
                                                             {updateMessage !== '' ?

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import '../../css/bootstrap.min.css'
-import '../../css/magnific-popup.css'
-import '../../css/nice-select.css'
-import '../../css/slicknav.min.css'
-import '../../css/style.css'
-import '../../css/style.css.map'
-import '../../css/slicknav.min.css'
+import '../../../css/bootstrap.min.css'
+import '../../../css/magnific-popup.css'
+import '../../../css/nice-select.css'
+import '../../../css/slicknav.min.css'
+import '../../../css/style.css'
+import '../../../css/style.css.map'
+import '../../../css/slicknav.min.css'
 import './ProductDetail.css'
+import Header from '../../../Components/Header/Header'
+import Footer from '../../../Components/Footer/Footer'
 import { NavLink, useLocation } from 'react-router-dom'
-import Header from '../../Components/Header/Header'
-import Footer from '../../Components/Footer/Footer'
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
@@ -94,17 +94,33 @@ function ProductDetail() {
                                           <div className="col-lg-3 col-md-3 " style={{ overflowY: 'scroll', height: '550px' }}>
                                                 <div className="nav nav-tabs" role="tablist">
                                                       {data.productImages?.map((imageItem, index) => {
-                                                            return (
-                                                                  <div key={index} className="nav-item" onClick={() => handleMainImage(imageItem.image)}>
-                                                                        < div className="nav-link" >
-                                                                              <div className="product__thumb__pic set-bg" style={{
-                                                                                    backgroundSize: 'contain',
-                                                                                    backgroundImage: `url(${imageItem.image})`,
-                                                                              }}>
+                                                            if (imageItem.image.includes('uploads')) {
+                                                                  return (
+                                                                        <div key={index} className="nav-item" onClick={() => handleMainImage(imageItem.image)}>
+                                                                              < div className="nav-link" >
+                                                                                    <div className="product__thumb__pic set-bg" style={{
+                                                                                          backgroundSize: 'contain',
+                                                                                          backgroundImage: `url(http://${imageItem.image})`,
+                                                                                    }}>
+                                                                                    </div>
                                                                               </div>
                                                                         </div>
-                                                                  </div>
-                                                            )
+                                                                  )
+                                                            }
+                                                            else {
+                                                                  return (
+                                                                        <div key={index} className="nav-item" onClick={() => handleMainImage(imageItem.image)}>
+                                                                              < div className="nav-link" >
+                                                                                    <div className="product__thumb__pic set-bg" style={{
+                                                                                          backgroundSize: 'contain',
+                                                                                          backgroundImage: `url(${imageItem.image})`,
+                                                                                    }}>
+                                                                                    </div>
+                                                                              </div>
+                                                                        </div>
+                                                                  )
+                                                            }
+
                                                       })}
                                                 </div>
                                           </div>
@@ -112,7 +128,12 @@ function ProductDetail() {
                                                 <div className="tab-content">
                                                       <div className="tab-pane active" id="tabs-1" role="tabpanel">
                                                             <div className="product__details__pic__item">
-                                                                  <img src={mainImage} alt="" />
+                                                                  {mainImage.includes('uploads') ?
+                                                                        <img src={`http://${mainImage}`} alt='' />
+                                                                        :
+                                                                        <img src={mainImage} alt='' />
+                                                                  }
+                                                                  {/* <img src={mainImage} alt="" /> */}
                                                             </div>
                                                       </div>
 
