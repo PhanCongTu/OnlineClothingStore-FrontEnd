@@ -194,7 +194,7 @@ const Popup = ({ userName, orderId, status, parentCallback }) => {
             LoginedUser = JSON.parse(localStorage.getItem('LoginedUser'));
       }
       const [show, setShow] = useState(false);
-      const [newstatus, setsNewtatus] = useState(4)
+      const [newstatus, setsNewtatus] = useState(0)
       const handleClose = () => {
             setShow(false)
       };
@@ -211,11 +211,10 @@ const Popup = ({ userName, orderId, status, parentCallback }) => {
 
             axios.request(config)
                   .then((response) => {
-
                         parentCallback()
+                        setsNewtatus(0)
                   })
                   .catch((error) => {
-
                         alert(error.message);
                   });
             setShow(false)
@@ -230,8 +229,6 @@ const Popup = ({ userName, orderId, status, parentCallback }) => {
                   setsNewtatus(2)
             else if (num == 3)
                   setsNewtatus(3)
-            else
-                  setsNewtatus(4)
       }
       return (
             <div>
