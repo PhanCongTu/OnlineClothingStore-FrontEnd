@@ -79,14 +79,14 @@ function Header() {
                                                 textDecoration: 'none',
                                                 color: isActive ? 'red' : 'black',
                                                 borderBottom: isActive ? '3px solid red' : ''
-                                          })} to="/">Home</NavLink>
+                                          })} to="/">Trang chủ</NavLink>
                                     </li>
                                     <li>
                                           <NavLink style={({ isActive }) => ({
                                                 textDecoration: 'none',
                                                 color: isActive ? 'red' : 'black',
                                                 borderBottom: isActive ? '3px solid red' : ''
-                                          })} to="/shop">Shop</NavLink>
+                                          })} to="/shop">Cửa hàng</NavLink>
                                     </li>
                                     {/* <li>
                                           <NavLink style={({ isActive }) => ({

@@ -46,8 +46,8 @@ function Home() {
                               <div className="row">
                                     <div className="col-lg-12">
                                           <ul className="filter__controls">
-                                                <li className={option === 'best-selling' ? 'active' : ''} name='best-selling' onClick={() => handleOption('best-selling')} >Best Sellers</li>
-                                                <li className={option === 'new' ? 'active' : ''} name='new' onClick={() => handleOption('new')} >New Arrivals</li>
+                                                <li className={option === 'best-selling' ? 'active' : ''} name='best-selling' onClick={() => handleOption('best-selling')} >Bán chạy</li>
+                                                <li className={option === 'new' ? 'active' : ''} name='new' onClick={() => handleOption('new')} >Mới</li>
                                           </ul>
                                     </div>
                               </div>
