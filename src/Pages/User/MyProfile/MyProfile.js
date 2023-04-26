@@ -240,7 +240,7 @@ function MyProfile() {
                                                       <div className="checkout__order">
                                                             <h4 className="order__title">Ảnh đại diện</h4>
                                                             <div>
-                                                                  {avatar.includes('uploads') ?
+                                                                  {avatar?.includes('uploads') ?
                                                                         <img className='product-image' src={avatar !== null ? `http://${avatar}` : defaultAvatar} alt='' />
                                                                         :
                                                                         <img className='product-image' src={avatar !== null ? avatar : defaultAvatar} alt='' />

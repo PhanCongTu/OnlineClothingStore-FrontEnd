@@ -83,7 +83,7 @@ function Product() {
                   .then((response) => {
                         // console.log(response.data.content);
                         setListCat(response.data.content);
-                        setCPCategoryId(response.data?.content[0].id)
+                        setCPCategoryId(response.data?.content[0]?.id)
                   })
                   .catch((error) => {
                         // 
