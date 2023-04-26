@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import AdminHeader from '../../../Components/AdminHeader/AdminHeader'
+import './User.css'
 import '../../../css/bootstrap.min.css'
 import '../../../css/magnific-popup.css'
 import '../../../css/nice-select.css'
@@ -7,12 +7,12 @@ import '../../../css/slicknav.min.css'
 import '../../../css/style.css'
 import '../../../css/style.css.map'
 import '../../../css/slicknav.min.css'
-import './Category.css'
+import DefaultAvatar from '../../../Image/default-avatar.png'
+import AdminHeader from '../../../Components/AdminHeader/AdminHeader'
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
-
-function Category() {
+function User() {
       let LoginedUser = JSON.parse(sessionStorage.getItem('LoginedUser'));
       if (!LoginedUser) {
             LoginedUser = JSON.parse(localStorage.getItem('LoginedUser'));
@@ -23,9 +23,7 @@ function Category() {
       const [totalPages, setTotalPages] = useState(0)
       const [totalElements, setTotalElements] = useState(0)
       const [sortType, setSortType] = useState(0)
-      const [name, setName] = useState('')
       const [rerender, serRerender] = useState(true)
-
       const handleSearchText = (e) => {
             setSearchText(e.target.value)
       }
@@ -39,16 +37,14 @@ function Category() {
             console.log(number)
             setPageNumber(number)
       }
-      const handleName = (e) => {
-            setName(e.target.value)
-      }
-
       useEffect(() => {
             let config = {
                   method: 'get',
                   maxBodyLength: Infinity,
-                  url: `http://localhost:8282/api/category?searchText=${searchText}&page=${pageNumber}&sortType=${sortType}`,
-                  headers: {}
+                  url: `http://localhost:8282/api/user?searchText=${searchText}&page=${pageNumber}&sortType=${sortType}`,
+                  headers: {
+                        'Authorization': `Bearer ${LoginedUser.token}`
+                  }
             };
 
             axios.request(config)
@@ -63,38 +59,12 @@ function Category() {
                         alert(error.message);
                   });
       }, [searchText, sortType, pageNumber, rerender])
-      const AddNewCategory = () => {
-            let data = JSON.stringify({
-                  "name": `${name}`
-            });
-
-            let config = {
-                  method: 'post',
-                  maxBodyLength: Infinity,
-                  url: 'http://localhost:8282/api/category/add',
-                  headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${LoginedUser.token}`
-                  },
-                  data: data
-            };
-
-            axios.request(config)
-                  .then((response) => {
-                        // alert('Thanh cong')
-                        setName('')
-                        serRerender((prev) => !prev)
-                  })
-                  .catch((error) => {
-                        alert(error.message)
-                  });
-      }
-      const ChangeStatus = (catId) => {
+      const ChangeStatus = (userId) => {
 
             let config = {
                   method: 'put',
                   maxBodyLength: Infinity,
-                  url: `http://localhost:8282/api/category/change-status/${catId}`,
+                  url: `http://localhost:8282/api/user/change-status/${userId}`,
                   headers: {
                         'Authorization': `Bearer ${LoginedUser.token}`
                   }
@@ -113,22 +83,12 @@ function Category() {
             <div>
                   <AdminHeader />
                   <div className="container">
-                        <div className="input-group justify-content-start p-3">
-                              <div className='new_cat_label' >Thêm danh mục mới</div>
-                              <div className="form-outline">
-                                    <input onChange={(e) => handleName(e)} type="search" id="form1"
-                                          value={name}
-                                          className="form-control" placeholder='Tên danh mục' />
-                              </div>
-                              <div onClick={() => AddNewCategory()} className="btn btn-success">
-                                    Thêm
-                              </div>
-                        </div>
+
                         <div className="input-group justify-content-end p-3">
                               <div className="form-outline">
                                     <input onChange={(e) => handleSearchText(e)} type="search"
                                           value={searchText}
-                                          id="form1" className="form-control" placeholder='Tên danh mục' />
+                                          id="form1" className="form-control" placeholder='Tên người dùng' />
                               </div>
                               <button type="button" className="btn btn-primary">
                                     search
@@ -155,29 +115,41 @@ function Category() {
                         <table className="table table-hover">
                               <thead>
                                     <tr className="d-flex ">
-                                          <th className="col-1 d-flex justify-content-center ">Số thứ tự</th>
-                                          <th className="col-6 d-flex justify-content-center">Tên</th>
-                                          <th className="col-3 d-flex justify-content-center ">Trạng thái</th>
-                                          <th className="col-2 d-flex justify-content-center ">Hành động</th>
+                                          <th className="col-2 d-flex justify-content-center">Tên</th>
+                                          <th className="col-2 d-flex justify-content-center ">Ảnh dại diện</th>
+                                          <th className="col-2 d-flex justify-content-center ">Số điện thoại</th>
+                                          <th className="col-2 d-flex justify-content-center ">Email</th>
+                                          <th className="col-1 d-flex justify-content-center ">Trạng thái</th>
+                                          <th className="col-2 d-flex justify-content-center ">Vài trò</th>
+                                          <th className="col-1 d-flex justify-content-center ">Trạng thái</th>
                                     </tr>
                               </thead>
                               <tbody>
-                                    {data?.map((category, index) => {
+                                    {data?.map((user, index) => {
                                           return (
                                                 <tr key={index} className="d-flex ">
-                                                      <td className="col-1 d-flex justify-content-center align-items-center ">{index + 1}</td>
-                                                      <td className="col-6 d-flex justify-content-center align-items-center">{category.name}</td>
-                                                      {
-                                                            category.isDeleted === false ?
-                                                                  <td className="col-3 d-flex justify-content-center align-items-center text-success">Hoạt động</td>
+                                                      <td className="col-2 d-flex justify-content-center align-items-center ">{user.name}</td>
+                                                      <td className="col-2 d-flex justify-content-center align-items-center ">
+                                                            {user.avatar?.includes('uploads') ?
+                                                                  <img className='product-image' style={{ maxWidth: '70px' }} src={user.avatar !== null ? `http://${user.avatar}` : DefaultAvatar} alt='' />
                                                                   :
-                                                                  <td className="col-3 d-flex justify-content-center align-items-center text-danger">Không khả dụng</td>
-
-
+                                                                  <img className='product-image' style={{ maxWidth: '70px' }} src={user.avatar !== null ? user.avatar : DefaultAvatar} alt='' />
+                                                            }
+                                                      </td>
+                                                      <td className="col-2 d-flex justify-content-center align-items-center ">{user.phoneNumber}</td>
+                                                      <td className="col-2 d-flex justify-content-center align-items-center ">{user.email}</td>
+                                                      {user.isActive ?
+                                                            <td className="col-1 d-flex justify-content-center align-items-center text-success">Hoạt động</td>
+                                                            :
+                                                            <td className="col-1 d-flex justify-content-center align-items-center text-danger">Vô hiệu hóa</td>
                                                       }
-                                                      <td className="col-2 d-flex justify-content-center align-items-center change-status "
-                                                            onClick={() => ChangeStatus(category.id)}
-                                                      >Đổi trạng thái</td>
+
+                                                      <td className="col-2 d-flex justify-content-center align-items-center ">{user.roles.map(
+                                                            (role) => (`${role} `)
+                                                      )}</td>
+                                                      <td className="col-1 d-flex justify-content-center align-items-center ">
+                                                            <div className='btn btn-success' onClick={() => ChangeStatus(user.id)} >Đổi</div>
+                                                      </td>
                                                 </tr>
                                           )
                                     })}
@@ -199,9 +171,8 @@ function Category() {
                               </div>
                         </div>
                   </div>
-
             </div>
       )
 }
 
-export default Category
+export default User

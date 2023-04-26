@@ -77,6 +77,13 @@ function AdminHeader() {
                                                 borderBottom: isActive ? '3px solid red' : ''
                                           })} to="/order">Đơn hàng</NavLink>
                                     </li>
+                                    <li>
+                                          <NavLink style={({ isActive }) => ({
+                                                textDecoration: 'none',
+                                                color: isActive ? 'red' : 'black',
+                                                borderBottom: isActive ? '3px solid red' : ''
+                                          })} to="/user">Người dùng</NavLink>
+                                    </li>
                                     {/* <li>
                                           <NavLink style={({ isActive }) => ({
                                                 textDecoration: 'none',
