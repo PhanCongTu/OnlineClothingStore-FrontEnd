@@ -103,10 +103,10 @@ function User() {
                                     </div>
                                     <div className="col-lg-6 col-md-6 col-sm-6">
                                           <div className="shop__product__option__right">
-                                                <p>Sắp xếp theo:</p>
+                                                <p>Sắp xếp theo tên:</p>
                                                 <select className='select-sort' onChange={(e) => handleSortType(e.target.value)} >
-                                                      <option value="0" >Hoạt động</option>
-                                                      <option value="1" >Không khả dụng</option>
+                                                      <option value="0" >Tăng dần</option>
+                                                      <option value="1" >Giảm dần</option>
                                                 </select>
                                           </div>
                                     </div>
