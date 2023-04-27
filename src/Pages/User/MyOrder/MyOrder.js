@@ -9,7 +9,7 @@ import '../../../css/slicknav.min.css'
 import './MyOrder.css'
 import Header from '../../../Components/Header/Header'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 function MyOrder() {
       const navigate = useNavigate();
       let LoginedUser = JSON.parse(sessionStorage.getItem('LoginedUser'));
@@ -87,7 +87,7 @@ function MyOrder() {
                                                                                                 {/* <img className='product_img' src={item.product?.productImages[0].image} alt="" /> */}
                                                                                           </div>
                                                                                           <div className="product__cart__item__text">
-                                                                                                <h6>{item.product.productName}</h6>
+                                                                                                <NavLink className='product_item_name' to="/product-detail" state={{ productId: item.product.id }} >{item.product.productName}</NavLink>
                                                                                                 <h5>{item.product.price} VNĐ</h5>
                                                                                           </div>
                                                                                     </td>

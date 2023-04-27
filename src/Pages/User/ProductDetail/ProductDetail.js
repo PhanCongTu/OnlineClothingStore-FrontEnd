@@ -24,6 +24,7 @@ function ProductDetail() {
       const { productId } = location.state
       const [data, setData] = useState({})
       const [size, setSize] = useState('')
+      const [productQuantity, setProductQuantity] = useState(0)
       const [quantity, setQuantity] = useState(1)
       const [mainImage, setMainImage] = useState('')
       const [success, setSuccess] = useState(false)
@@ -31,7 +32,9 @@ function ProductDetail() {
             setMainImage(ulr)
       }
       const handleQuantity = (num) => {
-            if (num > 0) setQuantity(num)
+            if (num > 0 && num <= productQuantity) {
+                  setQuantity(num)
+            }
       }
       const handleSize = (size) => {
             console.log(size)
@@ -49,6 +52,7 @@ function ProductDetail() {
                   .then((response) => {
                         setData(response.data)
                         setSize(response.data.productSizes[0].size)
+                        setProductQuantity(response.data.quantity)
                         setMainImage(response.data.productImages[0].image)
                   })
                   .catch((error) => {

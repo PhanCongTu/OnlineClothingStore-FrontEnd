@@ -20,7 +20,10 @@ function Cart() {
       }
       const [data, setData] = useState([])
       const [updateSwitch, setUpdateSwitch] = useState(true)
-
+      const [overQuantity, setOverQuantity] = useState(false)
+      const handleOrder = () => {
+            navigate('/checkout')
+      }
 
       const handleDeleteCart = (cartId) => {
             let config = {
@@ -112,6 +115,7 @@ function Cart() {
                                                             <tr>
                                                                   <th>Sản phẩm</th>
                                                                   <th>Số lượng</th>
+                                                                  <th>Còn lại</th>
                                                                   <th>Size</th>
                                                                   <th>Tổng tiền</th>
                                                                   <th></th>
@@ -119,7 +123,13 @@ function Cart() {
                                                       </thead>
                                                       <tbody>
                                                             {data.length > 0 ? data?.map((cartItem, index) => {
-                                                                  // 
+                                                                  if (cartItem.quantity > cartItem.product.quantity && overQuantity !== true) {
+                                                                        setOverQuantity(true)
+                                                                  }
+                                                                  else if (cartItem.quantity <= cartItem.product.quantity && overQuantity !== false) {
+                                                                        setOverQuantity(false)
+                                                                  }
+
                                                                   return (
                                                                         <tr key={index} id={`id-${cartItem.id}`} >
                                                                               <td className="product__cart__item">
@@ -155,6 +165,8 @@ function Cart() {
                                                                                     </div>
 
                                                                               </td>
+
+                                                                              <td className="quantity__item"><b>{cartItem.product.quantity}</b></td>
                                                                               <td className="cart__size">{cartItem.size}</td>
                                                                               <td className="cart__price">{cartItem.quantity * cartItem.product.price} VND</td>
                                                                               <td className="cart__close"><FontAwesomeIcon className='icon_delete' icon={faXmark} size='xl' onClick={() => handleDeleteCart(cartItem.id)} /></td>
@@ -188,11 +200,11 @@ function Cart() {
                                                             0
                                                       ) : '0'} VND</span></li>
                                                 </ul>
-                                                {data.length > 0 ?
-                                                      <div className="continue__btn update__btn" onClick={() => navigate('/checkout')}>
+                                                {data.length > 0 && overQuantity != true ?
+                                                      <div className="continue__btn update__btn" onClick={() => handleOrder()}>
                                                             <div ><FontAwesomeIcon icon={faTruck} /> Tiến hành đặt hàng</div>
                                                       </div>
-                                                      : <></>}
+                                                      : <h4 className='text-danger pt-3' >Số lượng sản phẩm không đủ!</h4>}
 
                                           </div>
                                     </div>
