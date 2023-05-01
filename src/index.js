@@ -17,6 +17,7 @@ import Product from './Pages/Admin/Product/Product';
 import ProductImageAndSize from './Pages/Admin/ProductImageAndSize/ProductImageAndSize';
 import Order from './Pages/Admin/Order/Order';
 import User from './Pages/Admin/User/User';
+import Revenue from './Pages/Admin/Revenue/Revenue';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -38,6 +39,8 @@ root.render(
           <Route path="/product-image-size" element={<ProductImageAndSize />} />
           <Route path="/order" element={<Order />} />
           <Route path="/user" element={<User />} />
+          <Route path="/revenue" element={<Revenue />} />
+
 
         </Routes>
       </div>

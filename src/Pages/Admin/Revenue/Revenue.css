@@ -1,0 +1,24 @@
+.revenue-container {
+  padding-left: 20px !important;
+
+  width: 99%;
+}
+.start-time {
+  padding-left: 200px;
+  width: 600px;
+}
+.end-time {
+  padding-left: 50px;
+  width: 600px;
+}
+.date-container {
+  /* d-flex justify-content-center align-items-center  */
+  display: flex;
+  /* align-items: center;
+  justify-content: center; */
+  float: left;
+}
+.form-control {
+  width: 300px;
+  padding-right: 10px !important;
+}

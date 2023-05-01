@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import AdminHeader from '../../../Components/AdminHeader/AdminHeader'
+
 import '../../../css/bootstrap.min.css'
 import '../../../css/magnific-popup.css'
 import '../../../css/nice-select.css'
@@ -7,64 +7,73 @@ import '../../../css/slicknav.min.css'
 import '../../../css/style.css'
 import '../../../css/style.css.map'
 import '../../../css/slicknav.min.css'
-import './Order.css'
+import './Revenue.css'
+import AdminHeader from '../../../Components/AdminHeader/AdminHeader'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { Button, Modal } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import { useNavigate } from 'react-router-dom'
-function Order() {
+
+function Revenue() {
       let LoginedUser = JSON.parse(sessionStorage.getItem('LoginedUser'));
       if (!LoginedUser) {
             LoginedUser = JSON.parse(localStorage.getItem('LoginedUser'));
       }
       const navigate = useNavigate();
       const [data, setData] = useState([])
-      const [searchText, setSearchText] = useState('')
       const [pageNumber, setPageNumber] = useState(0)
       const [totalPages, setTotalPages] = useState(0)
       const [totalElements, setTotalElements] = useState(0)
-      const [status, setstatus] = useState(4)
       const [rerender, setRerender] = useState(true)
-      const [sortType, setSortType] = useState(0)
-      // Dành cho popup
-      const callbackFunction = () => {
-            setRerender((prev) => !prev)
+      var defaultStartDate = new Date();
+      defaultStartDate.setDate(defaultStartDate.getDate() - 5)
+      var defaultEndDate = new Date();
+      defaultEndDate.setDate(defaultEndDate.getDate() + 1)
+      const [startDate, setStartDate] = useState({
+            day: defaultStartDate.getDate() - 1,
+            month: defaultStartDate.getMonth() + 1,
+            year: defaultStartDate.getFullYear()
+      })
+      const [endDate, setEndDate] = useState({
+            day: defaultEndDate.getDate() - 1,
+            month: defaultEndDate.getMonth() + 1,
+            year: defaultEndDate.getFullYear()
+      })
+      const handleStartDate = (value) => {
+            var myDate = new Date(value);
+            setStartDate({
+                  day: myDate.getDate(),
+                  month: myDate.getMonth() + 1,
+                  year: myDate.getFullYear()
+            })
       }
-      ///
-      const handleStatus = (num) => {
-            if (num == 0)
-                  setstatus(0)
-            else if (num == 1)
-                  setstatus(1)
-            else if (num == 2)
-                  setstatus(2)
-            else if (num == 3)
-                  setstatus(3)
-            else
-                  setstatus(4)
-      }
-      const handleSortType = () => {
-            if (sortType === 0)
-                  setSortType(1)
-            else
-                  setSortType(0)
-      }
-      const handleSearchText = (e) => {
-            setSearchText(e.target.value)
+      const handleEndDate = (value) => {
+            var myDate = new Date(value);
+            setEndDate({
+                  day: myDate.getDate(),
+                  month: myDate.getMonth() + 1,
+                  year: myDate.getFullYear()
+            })
       }
       const handlePage = (number) => {
-            // console.log(number)
             setPageNumber(number)
       }
       useEffect(() => {
+            let data = JSON.stringify({
+                  "thoiGianBatDau": `${startDate.day}-${startDate.month}-${startDate.year}`,
+                  "thoiGianKetThuc": `${endDate.day}-${endDate.month}-${endDate.year}`
+            });
+
             let config = {
-                  method: 'get',
+                  method: 'post',
                   maxBodyLength: Infinity,
-                  url: `http://localhost:8282/api/order?Istatus=${status}&searchText=${searchText}&page=${pageNumber}&sortType=${sortType}`,
+                  url: 'http://localhost:8282/api/order/revenue',
                   headers: {
+                        'Content-Type': 'application/json',
                         'Authorization': `Bearer ${LoginedUser.token}`
-                  }
+                  },
+                  data: data
             };
 
             axios.request(config)
@@ -77,26 +86,54 @@ function Order() {
                   .catch((error) => {
                         navigate('/login')
                   });
-
-      }, [rerender, status, sortType, searchText])
+      }, [startDate, endDate])
+      const totalMoney = data.reduce(
+            (accumulator, currentValue) => accumulator + currentValue.total,
+            0
+      );
       return (
-            <div>
+            <>
                   <AdminHeader />
-                  <div className="order-container row">
-                        <div className="order-title">
-                              <h2 >Danh sách đặt hàng</h2>
-                        </div>
-                        <div className="input-group justify-content-end p-3">
-                              <div className="form-outline">
-                                    <input onChange={(e) => handleSearchText(e)} type="search"
-                                          value={searchText}
-                                          style={{ width: '300px' }}
-                                          id="form1" className="form-control" placeholder='Số điện thoại, địa chỉ' />
+                  <div className="revenue-container">
+
+                        <h2 className='p-3'>Doanh thu</h2>
+
+
+                        <div className=" date-container ">
+                              <div className='start-time row' >
+                                    <label htmlFor="start-date" className="col-3 col-form-label"><b>Từ ngày: </b></label>
+                                    <input type="date"
+                                          defaultValue={defaultStartDate.toISOString().substring(0, 10)}
+
+                                          onChange={(e) => handleStartDate(e.target.value)}
+                                          className="form-control" id="start-date" />
+
                               </div>
-                              <button type="button" className="btn btn-primary">
-                                    search
-                              </button>
+                              <div className='end-time row' >
+
+                                    <label htmlFor="end-date" className="col-3 col-form-label"><b>Đến ngày: </b></label>
+                                    <input type="date"
+                                          // value="2013-01-08"
+                                          defaultValue={defaultEndDate.toISOString().substring(0, 10)}
+                                          onChange={(e) => handleEndDate(e.target.value)}
+                                          className="form-control" id="end-date" />
+
+                              </div>
+                              <div className='btn btn-success btn-submit'
+                              >Tìm </div>
                         </div>
+                  </div>
+
+                  <div className="order-container row">
+
+                        <div className='pl-5 pt-4 pb-2'>
+                              <h5>Tổng doanh thu từ ngày <b> {startDate.day} - {startDate.month} - {startDate.year} </b>
+                                    đến ngày <b> {endDate.day} - {endDate.month} - {endDate.year} </b>  là
+                                    <span style={{ color: 'red' }}> {totalMoney} VND </span>
+                              </h5>
+                        </div>
+
+                        <h4 className="p-4" >Danh sách cách đơn hàng đã bán</h4>
 
                         <div className="shop__product__option">
                               <div className="row">
@@ -105,39 +142,18 @@ function Order() {
                                                 <p>Tìm thấy {totalElements} kết quả ({totalPages} trang)</p>
                                           </div>
                                     </div>
-                                    <div className="col-lg-4 col-md-6 col-sm-6">
-                                          <div className="shop__product__option__right">
-                                                <p>Trạng thái:</p>
-                                                <select className='select-sort' onChange={(e) => handleStatus(e.target.value)} >
-                                                      <option value="4" >Tất cả</option>
-                                                      <option value="0" >Chờ xác nhận</option>
-                                                      <option value="1" >Đã chuyển hàng</option>
-                                                      <option value="2" >Đã nhận</option>
-                                                      <option value="3" >Đã Hủy</option>
-                                                </select>
-                                          </div>
-                                    </div>
-                                    <div className="col-lg-4 col-md-6 col-sm-6">
-                                          <div className="shop__product__option__right">
-                                                <p>Thời gian: </p>
-                                                <select className='select-sort' onChange={(e) => handleSortType(e.target.value)} >
-                                                      <option value="0" >Xa đến gần</option>
-                                                      <option value="1" >Gần đến xa</option>
-                                                </select>
-                                          </div>
-                                    </div>
                               </div>
                         </div>
+
                         <table className="table table-hover">
                               <thead>
                                     <tr className="d-flex ">
-                                          <th className="col-2 d-flex justify-content-center align-items-center  ">Tên khách hàng</th>
+                                          <th className="col-3 d-flex justify-content-center align-items-center  ">Tên khách hàng</th>
                                           <th className="col-1 d-flex justify-content-center align-items-center ">SĐT</th>
-                                          <th className="col-2 d-flex justify-content-center align-items-center  ">Địa chỉ</th>
+                                          <th className="col-3 d-flex justify-content-center align-items-center  ">Địa chỉ</th>
                                           <th className="col-1 d-flex justify-content-center align-items-center  ">Ghi chú</th>
                                           <th className="col-2 d-flex justify-content-center align-items-center  ">Tổng số tiền</th>
                                           <th className="col-1 d-flex justify-content-center align-items-center  ">Ngày đặt</th>
-                                          <th className="col-2 d-flex justify-content-center align-items-center  ">Trạng thái</th>
                                           <th className="col-1 d-flex justify-content-center align-items-center  ">Hành động</th>
                                     </tr>
                               </thead>
@@ -148,21 +164,14 @@ function Order() {
                                                 var final_time = myDate.getHours() + ":" + myDate.getMinutes();
                                                 var final_date = myDate.getDate() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getFullYear();
                                                 return (
-
                                                       <tr key={index} className="d-flex ">
-
-                                                            <td className="col-2 d-flex justify-content-center align-items-center  ">{order.user?.name}</td>
+                                                            <td className="col-3 d-flex justify-content-center align-items-center  ">{order.user?.name}</td>
                                                             <td className="col-1 d-flex justify-content-center align-items-center  ">{order.phoneNumber}</td>
-                                                            <td className="col-2 d-flex justify-content-center align-items-center  ">{order.address}</td>
+                                                            <td className="col-3 d-flex justify-content-center align-items-center  ">{order.address}</td>
                                                             <td className="col-1 d-flex justify-content-center align-items-center  ">{order.note}</td>
                                                             <td className="col-2 d-flex justify-content-center align-items-center  ">{order.total} VNĐ</td>
                                                             <td className="col-1 d-flex justify-content-center align-items-center  ">{final_time} <br /> {final_date}</td>
-                                                            <td className="col-2 d-flex justify-content-center align-items-center  ">{order.status}</td>
-                                                            <td className="col-1 d-flex justify-content-center align-items-center   " >
-                                                                  <ChangeStatusPopup userName={order.user?.name}
-                                                                        orderId={order.id} status={order.status}
-                                                                        parentCallback={callbackFunction}
-                                                                  />
+                                                            <td className="col-1 d-flex justify-content-center align-items-center  ">
                                                                   <OrderDetailPopup orderId={order.id} />
                                                             </td>
                                                       </tr>
@@ -170,6 +179,10 @@ function Order() {
                                                 )
                                           })
                                           : <></>}
+
+
+
+
 
 
 
@@ -190,97 +203,11 @@ function Order() {
                               </div>
                         </div>
                   </div>
+            </>
 
-            </div>
+
       )
 }
-
-
-const ChangeStatusPopup = ({ userName, orderId, status, parentCallback }) => {
-
-      let LoginedUser = JSON.parse(sessionStorage.getItem('LoginedUser'));
-      if (!LoginedUser) {
-            LoginedUser = JSON.parse(localStorage.getItem('LoginedUser'));
-      }
-      const [show, setShow] = useState(false);
-      const [newstatus, setsNewtatus] = useState(0)
-      const handleClose = () => {
-            setShow(false)
-      };
-      const handleSave = () => {
-            setShow(false)
-            let config = {
-                  method: 'put',
-                  maxBodyLength: Infinity,
-                  url: `http://localhost:8282/api/order/update?orderId=${orderId}&Istatus=${newstatus}`,
-                  headers: {
-                        'Authorization': `Bearer ${LoginedUser.token}`
-                  }
-            };
-
-            axios.request(config)
-                  .then((response) => {
-                        parentCallback()
-                        setsNewtatus(0)
-                  })
-                  .catch((error) => {
-                        alert(error.message);
-                  });
-            setShow(false)
-      };
-      const handleShow = () => setShow(true);
-      const handleNewStatus = (num) => {
-            if (num == 0)
-                  setsNewtatus(0)
-            else if (num == 1)
-                  setsNewtatus(1)
-            else if (num == 2)
-                  setsNewtatus(2)
-            else if (num == 3)
-                  setsNewtatus(3)
-      }
-      return (
-            <div>
-                  <Button variant="success" onClick={handleShow}>
-                        Đổi
-                  </Button>
-
-                  <Modal show={show} onHide={handleClose}>
-                        <Modal.Header closeButton>
-                              <Modal.Title>Cập nhật trạng thái </Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                              <h6>Tên khách hàng: {userName}</h6>
-                              <h6>Mã đơn hàng: {orderId}</h6>
-                              <h6>Trạng thái hiện tại: {status}</h6>
-                              <div className=" d-flex justify-content-center align-items-center p-3">
-                                    <div className="shop__product__option__right">
-                                          <p style={{ fontSize: '18px' }} className='p-2'>Trạng thái mới: </p>
-                                          <select style={{ fontSize: '18px' }} className='select-sort' onChange={(e) => handleNewStatus(e.target.value)}>
-                                                <option value="0" >Chờ xác nhận</option>
-                                                <option value="1" >Đã chuyển hàng</option>
-                                                <option value="2" >Đã nhận</option>
-                                                <option value="3" >Đã Hủy</option>
-                                          </select>
-                                    </div>
-                              </div>
-
-                        </Modal.Body>
-
-                        <Modal.Footer>
-                              <Button variant="secondary" onClick={handleClose}>
-                                    Đóng
-                              </Button>
-
-                              <Button variant="primary" onClick={handleSave}>
-                                    Lưu thay đổi
-                              </Button>
-                        </Modal.Footer>
-                  </Modal>
-            </div>
-      )
-}
-
 const OrderDetailPopup = ({ orderId }) => {
       let LoginedUser = JSON.parse(sessionStorage.getItem('LoginedUser'));
       if (!LoginedUser) {
@@ -314,7 +241,7 @@ const OrderDetailPopup = ({ orderId }) => {
                         setShow(true),
                         loadOrderInf(orderId)
                   )}>
-                        xem
+                        Xem
                   </Button>
 
                   <Modal
@@ -397,4 +324,4 @@ const OrderDetailPopup = ({ orderId }) => {
             </>
       );
 }
-export default Order
+export default Revenue
