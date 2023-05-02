@@ -92,30 +92,35 @@ function Register() {
                                                 <input type="text" id="name" className="form-control form-control-lg"
                                                       value={state.name}
                                                       name="name"
+                                                      style={{ width: '100%' }}
                                                       onChange={e => handleChange(e)} />
 
                                                 <label className="form-label" htmlFor="Username">Tên đăng nhập* </label>
                                                 <input type="text" id="Username" className="form-control form-control-lg"
                                                       value={state.userName}
                                                       name="userName"
+                                                      style={{ width: '100%' }}
                                                       onChange={e => handleChange(e)} />
 
                                                 <label className="form-label" htmlFor="password">Mật khẩu* </label>
                                                 <input type="password" id="password" className="form-control form-control-lg"
                                                       value={state.password}
                                                       name="password"
+                                                      style={{ width: '100%' }}
                                                       onChange={e => handleChange(e)} />
 
                                                 <label className="form-label" htmlFor="phoneNumber">Số điện thoại </label>
                                                 <input type="number" id="phoneNumber" className="form-control form-control-lg"
                                                       value={state.phoneNumber}
                                                       name="phoneNumber"
+                                                      style={{ width: '100%' }}
                                                       onChange={e => handleChange(e)} />
 
                                                 <label className="form-label" htmlFor="email">Email </label>
                                                 <input type="email" id="email" className="form-control form-control-lg"
                                                       value={state.email}
                                                       name="email"
+                                                      style={{ width: '100%' }}
                                                       onChange={e => handleChange(e)} />
                                           </div>
 

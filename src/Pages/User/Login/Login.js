@@ -62,6 +62,7 @@ function Login() {
                                                 <input type="email" id="Username" className="form-control form-control-lg"
                                                       value={login.username}
                                                       name="username"
+                                                      style={{ width: '100%' }}
                                                       onChange={e => handleChange(e)} />
                                           </div>
 
@@ -70,6 +71,7 @@ function Login() {
                                                 <input type="password" id="form1Example23" className="form-control form-control-lg"
                                                       value={login.password}
                                                       name="password"
+                                                      style={{ width: '100%' }}
                                                       onChange={e => handleChange(e)} />
                                           </div>
 
