@@ -39,15 +39,13 @@ function CheckOut() {
             else setEmpty(false)
             setPhoneNumber(e.target.value)
       }
-      const handleChangeNote = (e) => {
-            if (e.target.value === '') setEmpty(true)
-            else setEmpty(false)
-            setNote(e.target.value)
-      }
       const handleChangeEmail = (e) => {
             if (e.target.value === '') setEmpty(true)
             else setEmpty(false)
             setEmail(e.target.value)
+      }
+      const handleChangeNote = (e) => {
+            setNote(e.target.value)
       }
 
 

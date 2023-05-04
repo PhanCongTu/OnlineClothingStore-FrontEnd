@@ -94,7 +94,7 @@ function Shop() {
                                                 <div className="shop__sidebar__accordion">
                                                       <div className="accordion" id="accordionExample">
                                                             <div className="card">
-                                                                  <h3><FontAwesomeIcon icon={faListUl} />  Categories</h3>
+                                                                  <h3><FontAwesomeIcon icon={faListUl} />  Các danh mục</h3>
                                                                   <div id="collapseOne" className="collapse show" data-parent="/accordionExample">
                                                                         <div className="card-body">
                                                                               <div className="shop__sidebar__categories">

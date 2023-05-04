@@ -231,7 +231,7 @@ function ProductImageAndSize() {
                                     className="form-control" placeholder='Nhập kích cỡ' />
                         </div>
                         <div className="btn btn-success" onClick={handleAddSize}>
-                              Thêm
+                              Thêm kích cỡ
                         </div>
                   </div>
                   <div className="size-container" >
@@ -252,9 +252,11 @@ function ProductImageAndSize() {
 
                                                       <td className="col d-flex justify-content-center text-success">{size.size}</td>
 
-                                                      <td className="col d-flex justify-content-center change-status "
+                                                      <td className="col d-flex justify-content-center"
                                                             onClick={() => handleDeleteSize(size.id)}
-                                                      >Xóa</td>
+                                                      >
+                                                            <div className='btn btn-danger'>Xóa</div>
+                                                      </td>
                                                 </tr>
                                           )
                                     })

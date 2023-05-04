@@ -175,9 +175,10 @@ function Category() {
 
 
                                                       }
-                                                      <td className="col-2 d-flex justify-content-center align-items-center change-status "
-                                                            onClick={() => ChangeStatus(category.id)}
-                                                      >Đổi trạng thái</td>
+                                                      <td className="col-2 d-flex justify-content-center align-items-center">
+                                                            <div className='btn btn-success'
+                                                                  onClick={() => ChangeStatus(category.id)} >Đổi trạng thái</div>
+                                                      </td>
                                                 </tr>
                                           )
                                     })}

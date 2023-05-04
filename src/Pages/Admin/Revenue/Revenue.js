@@ -27,16 +27,16 @@ function Revenue() {
       const [totalElements, setTotalElements] = useState(0)
       const [rerender, setRerender] = useState(true)
       var defaultStartDate = new Date();
-      defaultStartDate.setDate(defaultStartDate.getDate() - 5)
+      defaultStartDate.setDate(defaultStartDate.getDate() - 6)
       var defaultEndDate = new Date();
-      defaultEndDate.setDate(defaultEndDate.getDate() + 1)
+      defaultEndDate.setDate(defaultEndDate.getDate())
       const [startDate, setStartDate] = useState({
-            day: defaultStartDate.getDate() - 1,
+            day: defaultStartDate.getDate(),
             month: defaultStartDate.getMonth() + 1,
             year: defaultStartDate.getFullYear()
       })
       const [endDate, setEndDate] = useState({
-            day: defaultEndDate.getDate() - 1,
+            day: defaultEndDate.getDate(),
             month: defaultEndDate.getMonth() + 1,
             year: defaultEndDate.getFullYear()
       })
@@ -62,7 +62,7 @@ function Revenue() {
       useEffect(() => {
             let data = JSON.stringify({
                   "thoiGianBatDau": `${startDate.day}-${startDate.month}-${startDate.year}`,
-                  "thoiGianKetThuc": `${endDate.day}-${endDate.month}-${endDate.year}`
+                  "thoiGianKetThuc": `${endDate.day + 1}-${endDate.month}-${endDate.year}`
             });
 
             let config = {
@@ -133,7 +133,8 @@ function Revenue() {
                               </h5>
                         </div>
 
-                        <h4 className="p-4" >Danh sách cách đơn hàng đã bán</h4>
+                        <h4 className="p-4" >Danh sách cách đơn hàng đã bán từ ngày <b> {startDate.day} - {startDate.month} - {startDate.year} </b>
+                              đến ngày <b> {endDate.day} - {endDate.month} - {endDate.year} </b></h4>
 
                         <div className="shop__product__option">
                               <div className="row">

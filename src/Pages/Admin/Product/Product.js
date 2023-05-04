@@ -218,7 +218,7 @@ function Product() {
                                           value={cPName}
                                           onChange={(e) => handleCPName(e)}
                                           autocomplete="off"
-                                          className="form-control" placeholder='Tên danh mục' />
+                                          className="form-control" placeholder='Tên sản phẩm' />
 
                               </div>
                               <div className='new_product_label' >Số lượng * </div>
@@ -285,7 +285,7 @@ function Product() {
                                     <input type="search"
                                           value={searchText}
                                           onChange={(e) => handleSearch(e.target.value)}
-                                          id="form1" className="form-control" placeholder='Tên danh mục' />
+                                          id="form1" className="form-control" placeholder='Tên sản phẩm' />
                               </div>
                               <button type="button" className="btn btn-primary">
                                     search
@@ -346,10 +346,14 @@ function Product() {
                                                       <td className="col-2 d-flex justify-content-center align-items-center">{product?.category.name}</td>
                                                       <td className="col-1 d-flex justify-content-center align-items-center ">{product.quantity}</td>
                                                       <td className="col-1 d-flex justify-content-center align-items-center ">{product.sold}</td>
-                                                      <td className="col-1 d-flex justify-content-center align-items-center change-status ">
-                                                            <NavLink className='change-status' style={{ textDecoration: 'none' }} to="/product-image-size" state={{ productId: product.id }} >Sửa</NavLink>
+                                                      <td className="col-1 d-flex justify-content-center align-items-center">
+                                                            <div className='btn btn-success'>
+                                                                  <NavLink className='' style={{ textDecoration: 'none', color: 'white' }} to="/product-image-size" state={{ productId: product.id }} >Sửa</NavLink>
+                                                            </div>
                                                       </td>
-                                                      <td className="col-1 d-flex justify-content-center align-items-center change-status " onClick={() => DeleteProduct(product.id)}>Xóa</td>
+                                                      <td className="col-1 d-flex justify-content-center align-items-center" onClick={() => DeleteProduct(product.id)}>
+                                                            <div className='btn btn-danger'>Xóa</div>
+                                                      </td>
                                                 </tr>
                                           )
                                     })}
