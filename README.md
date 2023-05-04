@@ -29,7 +29,7 @@ HTML, CSS, Bootstrap, <b>ReactJS</b>
 - Đổi trạng thái của người dùng (Hoạt động <=> Vô hiệu hóa). Người dùng bị "vô hiệu hóa" sẽ không thể đăng nhập được nữa.
 ## Cách sử dụng project
 Clone project từ github và mở project trong Code Editor (Visual Studio Code).\
-Mở terminal và thực hiện:
+Mở terminal và thực hiện (Yêu cầu phải tải nodeJS trước):
 #### `npm install (npm i)`
 Dùng để tải các thư viện cần thiết của project.
 #### `npm start`
